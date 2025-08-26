@@ -14,6 +14,7 @@
 		E735563E2E544F91001AAB46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E73556292E544F91001AAB46 /* Assets.xcassets */; };
 		E7665B462E56399D00AC2BB1 /* News_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7665B452E56399C00AC2BB1 /* News_ch.swift */; };
 		E7665B4A2E56542900AC2BB1 /* WiiShop_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7665B492E56542900AC2BB1 /* WiiShop_ch.swift */; };
+		E7D7CA842E5E29BF00CA13BB /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7CA832E5E29BF00CA13BB /* Model.swift */; };
 		E7ED5BCB2E5C72D400B1AE9D /* Nintendo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED5BCA2E5C72D400B1AE9D /* Nintendo_ch.swift */; };
 		E7ED5BCE2E5CAF5A00B1AE9D /* WiiMessageBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED5BCD2E5CAF5900B1AE9D /* WiiMessageBoardView.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		E73556392E544F91001AAB46 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		E7665B452E56399C00AC2BB1 /* News_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News_ch.swift; sourceTree = "<group>"; };
 		E7665B492E56542900AC2BB1 /* WiiShop_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiiShop_ch.swift; sourceTree = "<group>"; };
+		E7D7CA832E5E29BF00CA13BB /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		E7ED5BCA2E5C72D400B1AE9D /* Nintendo_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nintendo_ch.swift; sourceTree = "<group>"; };
 		E7ED5BCD2E5CAF5900B1AE9D /* WiiMessageBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiiMessageBoardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,6 +67,7 @@
 				E7665B492E56542900AC2BB1 /* WiiShop_ch.swift */,
 				E72F778A2E54D406003C7C81 /* SettingsView.swift */,
 				E7665B452E56399C00AC2BB1 /* News_ch.swift */,
+				E7D7CA832E5E29BF00CA13BB /* Model.swift */,
 				E72F778D2E54D443003C7C81 /* TVnotomo_ch.swift */,
 				E73556292E544F91001AAB46 /* Assets.xcassets */,
 			);
@@ -164,6 +167,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7D7CA842E5E29BF00CA13BB /* Model.swift in Sources */,
 				E7ED5BCB2E5C72D400B1AE9D /* Nintendo_ch.swift in Sources */,
 				E72F778E2E54D443003C7C81 /* TVnotomo_ch.swift in Sources */,
 				E72F778B2E54D406003C7C81 /* SettingsView.swift in Sources */,

@@ -15,7 +15,7 @@ struct ContentView: View {
             ("テレビの友チャンネル", "tv.fill", Color.blue),
             ("ニュースチャンネル", "newspaper.fill", Color.green),
             ("Wiiショッピングチャンネル", "bag.fill", Color.blue),
-            ("みんなのニンテンドーチャンネル", "circle.hexagongrid", Color.gray)
+            ("みんなのニンテンドーチャンネル", "circlebadge.2", Color.gray)
         ]
         
         // ダウンロード済みチャンネルを追加
@@ -82,7 +82,7 @@ struct ContentView: View {
             // ここで$downloadedChannelsを渡す
             WiiShop_ch(downloadedChannels: $downloadedChannels)
         case "みんなのニンテンドーチャンネル":
-            NintendoChannelView()
+            NintendoChannel()
         default:
             EmptyView()
         }

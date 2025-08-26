@@ -31,11 +31,11 @@ struct VideoPlayerView: View {
 
 // MARK: - メインビュー
 // みんなのニンテンドーチャンネルのメイン画面
-struct NintendoChannelView: View {
+struct NintendoChannel: View {
     // Wiiウェアの静的データ
     private let videos: [Video] = [
         Video(title: "Nintendo Switch 紹介映像", youtubeURL: "https://www.youtube.com/embed/Jj4sfry-wYw?gl=JP"),
-        Video(title: "Nintendo Switch 紹介映像", youtubeURL: "https://www.youtube.com/embed/oCc6N_EoT44?gl=JP"),
+        Video(title: "Nintendo Switch 2 紹介映像", youtubeURL: "https://www.youtube.com/embed/oCc6N_EoT44?gl=JP"),
     ]
     
     var body: some View {
@@ -53,6 +53,7 @@ struct NintendoChannelView: View {
                         .foregroundColor(.white)
                 }
                 .padding(.top, 50)
+                
                 
                 // 動画リスト
                 List {
