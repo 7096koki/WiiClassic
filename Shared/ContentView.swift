@@ -2,16 +2,21 @@
 
 import SwiftUI
 
+
+
 struct ContentView: View {
+
     @Environment(\.horizontalSizeClass) var horizontalSizeClass // 端末のサイズクラスを判定
-    @State private var downloadedChannels: [PersonalChannel] = [] // ダウンロードしたチャンネルを保持
+    @Binding var downloadedChannels: [PersonalChannel] // @Bindingに変更
     
     // チャンネルリスト
     var channels: [(String, String, Color)] {
         var baseChannels: [(String, String, Color)] = [
             ("テレビの友チャンネル", "tv.fill", Color.blue),
             ("ニュースチャンネル", "newspaper.fill", Color.green),
-            ("Wiiショッピングチャンネル", "bag.fill", Color.blue)
+            ("Wiiショッピングチャンネル", "bag.fill", Color.blue),
+            ("みんなのニンテンドーチャンネル", "circlebadge.2", Color.gray),
+            ("お天気チャンネル","cloud.sun.fill",Color.blue)
         ]
         
         // ダウンロード済みチャンネルを追加
@@ -60,26 +65,9 @@ struct ContentView: View {
                 .padding()
                 
                 Spacer()
-                
-                // 設定ボタン
-                NavigationLink(destination: SettingsView(downloadedChannels: $downloadedChannels)) {
-                    HStack {
-                        Image(systemName: "gearshape.fill")
-                            .foregroundColor(.gray)
-                        Text("設定")
-                            .foregroundColor(.gray)
-                    }
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(10)
-                }
-                .padding(.bottom, 20)
             }
             .background(Color.white)
             .edgesIgnoringSafeArea(.all)
-        }
-        .onAppear {
-            self.loadChannels()
         }
     }
     
@@ -94,19 +82,12 @@ struct ContentView: View {
         case "Wiiショッピングチャンネル":
             // ここで$downloadedChannelsを渡す
             WiiShop_ch(downloadedChannels: $downloadedChannels)
-        case "設定":
-            SettingsView(downloadedChannels: $downloadedChannels)
+        case "みんなのニンテンドーチャンネル":
+            Nintendo_ch()
+        case "お天気チャンネル":
+            Forecast_ch()
         default:
             EmptyView()
-        }
-    }
-    
-    // UserDefaultsからチャンネルを読み込む
-    private func loadChannels() {
-        if let savedChannels = UserDefaults.standard.data(forKey: "downloadedChannels") {
-            if let decodedChannels = try? JSONDecoder().decode([PersonalChannel].self, from: savedChannels) {
-                self.downloadedChannels = decodedChannels
-            }
         }
     }
 }
@@ -140,5 +121,13 @@ struct ChannelIcon: View {
                     .foregroundColor(.gray)
             }
         }
+    }
+}
+
+// プレビュープロバイダー
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        // @Bindingのプレビューには.constant()を使用
+        ContentView(downloadedChannels: .constant([]))
     }
 }
