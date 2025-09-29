@@ -1,24 +1,5 @@
 import SwiftUI
 
-/*
-// MARK: - 0. ヘルパー（Color拡張）
-// Color(hex: "...") を使えるようにする拡張
-extension Color {
-    init(hex: String) {
-        let scanner = Scanner(string: hex)
-        var rgbValue: UInt64 = 0
-        scanner.scanLocation = 0
-        scanner.scanHexInt64(&rgbValue)
-
-        let r = Double((rgbValue & 0xFF0000) >> 16) / 255.0
-        let g = Double((rgbValue & 0x00FF00) >> 8) / 255.0
-        let b = Double(rgbValue & 0x0000FF) / 255.0
-
-        self.init(red: r, green: g, blue: b)
-    }
-}
-*/
- 
 // MARK: - 1. データ構造の定義
 // ユーザーが選択できる地域と、APIで使用するコードを紐づける
 struct City: Identifiable, Hashable {
@@ -32,12 +13,8 @@ struct CityManager {
     static let cities: [City] = [
         City(name: "東京", code: "130010"),
         City(name: "大阪", code: "270000"),
-        City(name: "名古屋", code: "230000"),
-        City(name: "札幌", code: "016000"),
         City(name: "福岡", code: "400010"),
-        City(name: "那覇", code: "471000"),
         City(name: "仙台", code: "040010"),
-        City(name: "久留米 (福岡)", code: "400010")
     ]
     
     static let defaultCity = cities[0]
@@ -45,36 +22,72 @@ struct CityManager {
 
 // APIから返ってくるJSONデータに対応するSwiftの構造体
 struct WeatherForecast: Decodable {
-    let title: String
     let publicTimeFormatted: String
-    let description: WeatherDescription
+    let descriptionDetail: WeatherDescription
     let forecasts: [Forecast]
-    
+    let title: String?
+
+    enum CodingKeys: String, CodingKey {
+        case publicTimeFormatted = "publicTime"
+        case descriptionDetail = "description"
+        case title
+        case forecasts
+    }
+
     struct WeatherDescription: Decodable {
         let headlineText: String?
         let bodyText: String?
     }
     
     struct Forecast: Decodable, Identifiable {
-        var id = UUID()
+        let id = UUID()
         let dateLabel: String
         let telop: String
         let temperature: Temperature
-        // APIによっては降水確率データがない場合があるためOptional
         let chanceOfRain: ChanceOfRain?
         
+        enum CodingKeys: String, CodingKey {
+            case dateLabel, telop, temperature, chanceOfRain
+        }
+        
+        // ChanceOfRainキーが完全に欠落している場合に対応
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            
+            // 必須項目はtryでデコード
+            self.dateLabel = try container.decode(String.self, forKey: .dateLabel)
+            self.telop = try container.decode(String.self, forKey: .telop)
+            
+            // Temperatureはカスタムデコードを使用するため、ここでデコード
+            self.temperature = try container.decode(Temperature.self, forKey: .temperature)
+            
+            // ChanceOfRainはキー自体がAPIに存在しない可能性があるため、decodeIfPresentを使う
+            self.chanceOfRain = try container.decodeIfPresent(ChanceOfRain.self, forKey: .chanceOfRain)
+        }
+        
+        // MARK: 【最終修正箇所: Temperatureにカスタムデコードを適用】
         struct Temperature: Decodable {
-            let min: Value? // 最小気温データ
-            let max: Value? // 最大気温データ
+            let min: Value?
+            let max: Value?
+            
+            enum CodingKeys: String, CodingKey {
+                case min, max
+            }
+            
+            // minまたはmaxのキーがJSONに存在しない場合に対応
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                // decodeIfPresentを使ってキーが存在しない場合はnilを許容する
+                self.min = try container.decodeIfPresent(Value.self, forKey: .min)
+                self.max = try container.decodeIfPresent(Value.self, forKey: .max)
+            }
         }
         
         struct Value: Decodable {
-            // 温度は文字列として格納されている
             let celsius: String?
         }
         
         struct ChanceOfRain: Decodable {
-            // 時間帯の文字列はAPIから変わらないため、そのまま定義
             let T00_06: String
             let T06_12: String
             let T12_18: String
@@ -106,6 +119,7 @@ class WeatherState: ObservableObject {
         }
         
         let cityCode = selectedCity.code
+        // 日本気象協会のAPI (livedoor) の代替APIを使用
         let urlString = "https://weather.tsukumijima.net/api/forecast?city=\(cityCode)"
         
         guard let url = URL(string: urlString) else {
@@ -136,7 +150,7 @@ class WeatherState: ObservableObject {
                     self.errorMessage = "データを受信できませんでした。"
                     return
                 }
-
+                
                 do {
                     // JSONデコード
                     let decodedForecast = try JSONDecoder().decode(WeatherForecast.self, from: data)
@@ -146,7 +160,20 @@ class WeatherState: ObservableObject {
                     // デバッグ用にエラーを表示
                     print("JSON Decode Error: \(error)")
                     // データ構造が間違っている可能性が高いことをユーザーに伝える
-                    self.errorMessage = "データの解析に失敗しました。構造がAPIと一致しません。"
+                    if let decodingError = error as? DecodingError {
+                        switch decodingError {
+                        case .keyNotFound(let key, let context):
+                            self.errorMessage = "データのキーが見つかりません: '\(key.stringValue)' - パス: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))"
+                        case .typeMismatch(_, let context):
+                            self.errorMessage = "データの型が一致しません。パス: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))"
+                        case .valueNotFound(_, let context):
+                            self.errorMessage = "データが見つかりません。パス: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))"
+                        default:
+                            self.errorMessage = "データの解析に失敗しました。構造がAPIと一致しません。"
+                        }
+                    } else {
+                        self.errorMessage = "データの解析に失敗しました。構造がAPIと一致しません。"
+                    }
                 }
             }
         }
@@ -154,7 +181,7 @@ class WeatherState: ObservableObject {
     }
 }
 
-// MARK: - 3. UIコンポーネントの定義 (変更なし)
+// MARK: - 3. UIコンポーネントの定義
 
 // 降水確率表示コンポーネント
 struct ChanceOfRainView: View {
@@ -200,6 +227,7 @@ struct ForecastTile: View {
                 .font(.subheadline)
                 .foregroundColor(.white)
             
+            // 最高/最低気温のデータがnilの場合に "--" を表示
             let maxTemp = forecast.temperature.max?.celsius ?? "--"
             let minTemp = forecast.temperature.min?.celsius ?? "--"
 
@@ -217,9 +245,10 @@ struct ForecastTile: View {
         .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 2)
     }
     
+    /// 天気概況からSF Symbolsのアイコン名を決定するヘルパー関数
     func weatherIcon(for telop: String) -> String {
         if telop.contains("晴") && !telop.contains("曇") && !telop.contains("雨") && !telop.contains("雪") {
-             return "sun.max.fill"
+            return "sun.max.fill"
         } else if telop.contains("曇") {
             return "cloud.fill"
         } else if telop.contains("雨") {
@@ -227,7 +256,7 @@ struct ForecastTile: View {
         } else if telop.contains("雪") {
             return "cloud.snow.fill"
         } else if telop.contains("雷") {
-             return "cloud.bolt.rain.fill"
+            return "cloud.bolt.rain.fill"
         } else {
             return "questionmark.circle.fill"
         }
@@ -237,7 +266,7 @@ struct ForecastTile: View {
 // エラー表示コンポーネント
 struct ErrorView: View {
     let message: String
-    // WeatherStateを環境変数として受け取り、再読み込みを可能にする
+    // WeatherStateをEnvironmentObjectとして受け取り、再読み込みを可能にする
     @EnvironmentObject var weatherState: WeatherState
     
     var body: some View {
@@ -275,6 +304,7 @@ struct ErrorView: View {
 
 // WiiClassicのお天気チャンネル画面
 struct Forecast_ch: View {
+    // 状態管理オブジェクトの初期化
     @StateObject var weatherState = WeatherState()
     
     var body: some View {
@@ -316,10 +346,13 @@ struct Forecast_ch: View {
             } else if let forecast = weatherState.forecast {
                 ScrollView {
                     VStack(spacing: 25) {
-                        Text(forecast.title)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(Color(hex: "191970"))
+                        // タイトルはOptionalになったため、nilチェック
+                        if let title = forecast.title {
+                            Text(title)
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(Color(hex: "191970"))
+                        }
                         
                         Text("発表時刻: \(forecast.publicTimeFormatted)")
                             .font(.caption)
@@ -338,13 +371,14 @@ struct Forecast_ch: View {
                         // 詳細情報
                         VStack(alignment: .leading, spacing: 15) {
                             // 降水確率（今日分のみ）
+                            // chanceOfRainがnilの場合は表示されない
                             if let todayForecast = forecast.forecasts.first, let chance = todayForecast.chanceOfRain {
                                 ChanceOfRainView(chance: chance)
                                     .padding(.bottom, 10)
                             }
 
                             // 見出し（注意報・警報）
-                            if let headline = forecast.description.headlineText {
+                            if let headline = forecast.descriptionDetail.headlineText {
                                 Text("注意報・警報")
                                     .font(.title3)
                                     .fontWeight(.semibold)
@@ -354,7 +388,7 @@ struct Forecast_ch: View {
                             }
                             
                             // 詳細な概況
-                            if let bodyText = forecast.description.bodyText {
+                            if let bodyText = forecast.descriptionDetail.bodyText {
                                 Text("概況")
                                     .font(.title3)
                                     .fontWeight(.semibold)
@@ -381,11 +415,13 @@ struct Forecast_ch: View {
             }
         }
         .background(Color.white.ignoresSafeArea())
+        // 環境オブジェクトとしてWeatherStateを注入 (ErrorView内で再利用できるように)
+        .environmentObject(weatherState)
     }
 }
 
 // MARK: - Preview (プレビューコード)
-struct WeatherChannelView_Previews: PreviewProvider {
+struct Forecast_ch_Previews: PreviewProvider {
     static var previews: some View {
         Forecast_ch()
     }
