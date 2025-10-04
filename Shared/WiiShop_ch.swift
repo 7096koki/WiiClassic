@@ -27,7 +27,7 @@ struct WiiShop_ch: View {
                     .font(.system(size: 60))
                     .foregroundColor(.white)
                 
-                Text("Wiiショッピングチャンネル・Wiiウェア")
+                Text("Wiiショッピングチャンネル")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
