@@ -122,33 +122,3 @@ struct SearchButton: View {
         }
     }
 }
-
-// MARK: - Webブラウザビュー
-struct WebBrowserView: View {
-    let url: String
-    
-    var body: some View {
-        ZStack {
-            WebView(url: url)
-        }
-        .navigationTitle("ブラウザ")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-// WKWebViewをSwiftUIでラップ
-struct WebView: UIViewRepresentable {
-    let url: String
-    
-    func makeUIView(context: Context) -> WKWebView {
-        let webView = WKWebView()
-        return webView
-    }
-    
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        if let url = URL(string: url) {
-            let request = URLRequest(url: url)
-            uiView.load(request)
-        }
-    }
-}
