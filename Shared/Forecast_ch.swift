@@ -10,32 +10,33 @@ struct City: Identifiable, Hashable {
 
 // 主要な地域コードのリスト
 struct CityManager {
-    /// 全国の主要な予報区を代表する17都市
+    // 全国の主要な予報区を代表する17都市
+    // 予報区コードを追加する時はここを参照 https://weather.tsukumijima.net/primary_area.xml
     static let cities: [City] = [
         // 北海道・東北
-        City(name: "札幌", code: "016000"), // 北海道
-        City(name: "仙台", code: "040000"), // 宮城県
+        City(name: "札幌", code: "016010"), // 北海道
+        City(name: "仙台", code: "040010"), // 宮城県
         
         // 関東・甲信
-        City(name: "東京", code: "130000"), // 東京都
-        City(name: "新潟", code: "150000"), // 新潟県
+        City(name: "東京", code: "130010"), // 東京都
+        City(name: "新潟", code: "150010"), // 新潟県
         
         // 東海・北陸
-        City(name: "静岡", code: "220000"), // 静岡県
-        City(name: "名古屋", code: "230000"), // 愛知県
-        City(name: "金沢", code: "170000"), // 石川県
+        City(name: "静岡", code: "220010"), // 静岡県
+        City(name: "名古屋", code: "230010"), // 愛知県
+        City(name: "金沢", code: "170010"), // 石川県
         
         // 近畿
         City(name: "大阪", code: "270000"), // 大阪府
         
         // 中国・四国
-        City(name: "広島", code: "340000"), // 広島県
-        City(name: "高知", code: "390000"), // 高知県
+        City(name: "広島", code: "340010"), // 広島県
+        City(name: "高知", code: "390010"), // 高知県
         
         // 九州・沖縄
-        City(name: "福岡", code: "400000"), // 福岡県
-        City(name: "鹿児島", code: "460100"), // 鹿児島県
-        City(name: "那覇", code: "471000"), // 沖縄県
+        City(name: "福岡", code: "400040"), // 福岡県
+        City(name: "鹿児島", code: "460010"), // 鹿児島県
+        City(name: "那覇", code: "471010"), // 沖縄県
         
     ]
     static let defaultCity = cities[0]
@@ -248,7 +249,7 @@ struct ForecastTile: View {
                 .font(.subheadline)
                 .foregroundColor(.white)
             
-            // 最高/最低気温のデータがnilの場合に "--" を表示
+            // 最高/最低気温のデータがnullの場合に "--" を表示
             let maxTemp = forecast.temperature.max?.celsius ?? "--"
             let minTemp = forecast.temperature.min?.celsius ?? "--"
 
@@ -331,7 +332,7 @@ struct Forecast_ch: View {
     var body: some View {
         VStack(spacing: 0) {
             // MARK: - ヘッダーと地域選択
-            HStack {
+            VStack {
                 Text("お天気チャンネル")
                     .font(.system(size: 28, weight: .heavy))
                     .foregroundColor(Color.blue)

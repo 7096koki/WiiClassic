@@ -53,8 +53,8 @@ struct AboutAppView: View {
             Text("WiiClassicについて")
                 .font(.title)
                 .fontWeight(.bold)
-            Text("バージョン: v1.1.0-alpha")
-            Text("開発者: WiiClassic作成所(仮)")
+            Text("バージョン: v1.3.0-alpha")
+            Text("開発者: Wii愛好家(仮)")
             Text("このアプリは、Wiiを現代のスマホという最先端機器に入れてみたいという一心で頑張って作っております。")
             Text("ニンテンドー、Wiiとは関係ないファンアプリです。")
         }
