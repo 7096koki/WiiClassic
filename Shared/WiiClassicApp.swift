@@ -1,5 +1,8 @@
 // WiiClassicApp.swift
+<<<<<<< HEAD
 // WiiClassicApp.swift
+=======
+>>>>>>> develop
 
 import SwiftUI
 
