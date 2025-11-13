@@ -74,6 +74,7 @@ struct PresetSearchView: View {
             .cornerRadius(10)
             
             // キーワードで探す
+            // キーワードで探す部分
             VStack(alignment: .leading, spacing: 10) {
                 Text("キーワードで探す")
                     .font(.headline)
@@ -84,7 +85,11 @@ struct PresetSearchView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     
                     // 検索ボタン
-                    NavigationLink(destination: WebBrowserView(url: "https://bangumi.org/search?q=\(searchText)&area_code=39")) {
+                    NavigationLink(
+                        destination: WebBrowserView(
+                            url: "https://bangumi.org/search?q=\(searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&area_code=39"
+                        )
+                    ) {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.blue)
                             .padding(10)

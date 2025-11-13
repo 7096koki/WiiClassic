@@ -7,39 +7,70 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E72F778B2E54D406003C7C81 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F778A2E54D406003C7C81 /* SettingsView.swift */; };
-		E72F778E2E54D443003C7C81 /* TVnotomo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F778D2E54D443003C7C81 /* TVnotomo_ch.swift */; };
-		E735563A2E544F91001AAB46 /* WiiClassicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73556272E544F8A001AAB46 /* WiiClassicApp.swift */; };
-		E735563C2E544F91001AAB46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73556282E544F8A001AAB46 /* ContentView.swift */; };
-		E735563E2E544F91001AAB46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E73556292E544F91001AAB46 /* Assets.xcassets */; };
-		E7665B462E56399D00AC2BB1 /* News_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7665B452E56399C00AC2BB1 /* News_ch.swift */; };
-		E7665B4A2E56542900AC2BB1 /* WiiShop_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7665B492E56542900AC2BB1 /* WiiShop_ch.swift */; };
-		E7D7CA842E5E29BF00CA13BB /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7CA832E5E29BF00CA13BB /* Model.swift */; };
-		E7E16C902E879FEF001948CB /* Forecast_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E16C8F2E879FEF001948CB /* Forecast_ch.swift */; };
-		E7ED5BCB2E5C72D400B1AE9D /* Nintendo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED5BCA2E5C72D400B1AE9D /* Nintendo_ch.swift */; };
-		E7ED5BCE2E5CAF5A00B1AE9D /* WiiMessageBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED5BCD2E5CAF5900B1AE9D /* WiiMessageBoardView.swift */; };
+		E717D7732EB99B3A004CB029 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E717D7632EB99B39004CB029 /* Assets.xcassets */; };
+		E717D7742EB99B3A004CB029 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E717D7632EB99B39004CB029 /* Assets.xcassets */; };
+		E717D7752EB99B3A004CB029 /* Nintendo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7642EB99B39004CB029 /* Nintendo_ch.swift */; };
+		E717D7762EB99B3A004CB029 /* Nintendo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7642EB99B39004CB029 /* Nintendo_ch.swift */; };
+		E717D7772EB99B3A004CB029 /* SaveData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E717D7652EB99B39004CB029 /* SaveData.xcdatamodeld */; };
+		E717D7782EB99B3A004CB029 /* SaveData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E717D7652EB99B39004CB029 /* SaveData.xcdatamodeld */; };
+		E717D7792EB99B3A004CB029 /* News_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7672EB99B39004CB029 /* News_ch.swift */; };
+		E717D77A2EB99B3A004CB029 /* News_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7672EB99B39004CB029 /* News_ch.swift */; };
+		E717D77B2EB99B3A004CB029 /* WiiClassic.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E717D7682EB99B39004CB029 /* WiiClassic.xcdatamodeld */; };
+		E717D77C2EB99B3A004CB029 /* WiiClassic.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E717D7682EB99B39004CB029 /* WiiClassic.xcdatamodeld */; };
+		E717D77D2EB99B3A004CB029 /* WiiClassicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76A2EB99B39004CB029 /* WiiClassicApp.swift */; };
+		E717D77E2EB99B3A004CB029 /* WiiClassicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76A2EB99B39004CB029 /* WiiClassicApp.swift */; };
+		E717D77F2EB99B3A004CB029 /* WiiMessageBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76B2EB99B39004CB029 /* WiiMessageBoardView.swift */; };
+		E717D7802EB99B3A004CB029 /* WiiMessageBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76B2EB99B39004CB029 /* WiiMessageBoardView.swift */; };
+		E717D7812EB99B3A004CB029 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76C2EB99B3A004CB029 /* Model.swift */; };
+		E717D7822EB99B3A004CB029 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76C2EB99B3A004CB029 /* Model.swift */; };
+		E717D7832EB99B3A004CB029 /* Forecast_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76D2EB99B3A004CB029 /* Forecast_ch.swift */; };
+		E717D7842EB99B3A004CB029 /* Forecast_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76D2EB99B3A004CB029 /* Forecast_ch.swift */; };
+		E717D7852EB99B3A004CB029 /* TVnotomo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76E2EB99B3A004CB029 /* TVnotomo_ch.swift */; };
+		E717D7862EB99B3A004CB029 /* TVnotomo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76E2EB99B3A004CB029 /* TVnotomo_ch.swift */; };
+		E717D7872EB99B3A004CB029 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76F2EB99B3A004CB029 /* Persistence.swift */; };
+		E717D7882EB99B3A004CB029 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76F2EB99B3A004CB029 /* Persistence.swift */; };
+		E717D7892EB99B3A004CB029 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7702EB99B3A004CB029 /* ContentView.swift */; };
+		E717D78A2EB99B3A004CB029 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7702EB99B3A004CB029 /* ContentView.swift */; };
+		E717D78B2EB99B3A004CB029 /* WiiShop_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */; };
+		E717D78C2EB99B3A004CB029 /* WiiShop_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */; };
+		E717D78D2EB99B3A004CB029 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7722EB99B3A004CB029 /* SettingsView.swift */; };
+		E717D78E2EB99B3A004CB029 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7722EB99B3A004CB029 /* SettingsView.swift */; };
+		E78AE1F72EC5960800840CA6 /* chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78AE1F62EC5960800840CA6 /* chess.swift */; };
+		E78AE1F82EC5960800840CA6 /* chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78AE1F62EC5960800840CA6 /* chess.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E72F778A2E54D406003C7C81 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		E72F778D2E54D443003C7C81 /* TVnotomo_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVnotomo_ch.swift; sourceTree = "<group>"; };
-		E73556272E544F8A001AAB46 /* WiiClassicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiiClassicApp.swift; sourceTree = "<group>"; };
-		E73556282E544F8A001AAB46 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		E73556292E544F91001AAB46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E717D7632EB99B39004CB029 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E717D7642EB99B39004CB029 /* Nintendo_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nintendo_ch.swift; sourceTree = "<group>"; };
+		E717D7662EB99B39004CB029 /* SaveData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SaveData.xcdatamodel; sourceTree = "<group>"; };
+		E717D7672EB99B39004CB029 /* News_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = News_ch.swift; sourceTree = "<group>"; };
+		E717D7692EB99B39004CB029 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
+		E717D76A2EB99B39004CB029 /* WiiClassicApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiiClassicApp.swift; sourceTree = "<group>"; };
+		E717D76B2EB99B39004CB029 /* WiiMessageBoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiiMessageBoardView.swift; sourceTree = "<group>"; };
+		E717D76C2EB99B3A004CB029 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		E717D76D2EB99B3A004CB029 /* Forecast_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Forecast_ch.swift; sourceTree = "<group>"; };
+		E717D76E2EB99B3A004CB029 /* TVnotomo_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVnotomo_ch.swift; sourceTree = "<group>"; };
+		E717D76F2EB99B3A004CB029 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		E717D7702EB99B3A004CB029 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiiShop_ch.swift; sourceTree = "<group>"; };
+		E717D7722EB99B3A004CB029 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E735562E2E544F91001AAB46 /* WiiClassic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiiClassic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E73556312E544F91001AAB46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E73556362E544F91001AAB46 /* WiiClassic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiiClassic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E73556382E544F91001AAB46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E73556392E544F91001AAB46 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
-		E7665B452E56399C00AC2BB1 /* News_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News_ch.swift; sourceTree = "<group>"; };
-		E7665B492E56542900AC2BB1 /* WiiShop_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiiShop_ch.swift; sourceTree = "<group>"; };
-		E7D7CA832E5E29BF00CA13BB /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		E7E16C8F2E879FEF001948CB /* Forecast_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast_ch.swift; sourceTree = "<group>"; };
-		E7ED5BCA2E5C72D400B1AE9D /* Nintendo_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nintendo_ch.swift; sourceTree = "<group>"; };
-		E7ED5BCD2E5CAF5900B1AE9D /* WiiMessageBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiiMessageBoardView.swift; sourceTree = "<group>"; };
+		E78AE1F62EC5960800840CA6 /* chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chess.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E735562B2E544F91001AAB46 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E73556332E544F91001AAB46 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -62,17 +93,21 @@
 		E73556262E544F8A001AAB46 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				E73556272E544F8A001AAB46 /* WiiClassicApp.swift */,
-				E73556282E544F8A001AAB46 /* ContentView.swift */,
-				E7ED5BCD2E5CAF5900B1AE9D /* WiiMessageBoardView.swift */,
-				E7ED5BCA2E5C72D400B1AE9D /* Nintendo_ch.swift */,
-				E7E16C8F2E879FEF001948CB /* Forecast_ch.swift */,
-				E7665B492E56542900AC2BB1 /* WiiShop_ch.swift */,
-				E72F778A2E54D406003C7C81 /* SettingsView.swift */,
-				E7665B452E56399C00AC2BB1 /* News_ch.swift */,
-				E7D7CA832E5E29BF00CA13BB /* Model.swift */,
-				E72F778D2E54D443003C7C81 /* TVnotomo_ch.swift */,
-				E73556292E544F91001AAB46 /* Assets.xcassets */,
+				E717D7632EB99B39004CB029 /* Assets.xcassets */,
+				E717D76A2EB99B39004CB029 /* WiiClassicApp.swift */,
+				E717D7702EB99B3A004CB029 /* ContentView.swift */,
+				E717D76C2EB99B3A004CB029 /* Model.swift */,
+				E717D76F2EB99B3A004CB029 /* Persistence.swift */,
+				E717D7652EB99B39004CB029 /* SaveData.xcdatamodeld */,
+				E717D7682EB99B39004CB029 /* WiiClassic.xcdatamodeld */,
+				E78AE1F62EC5960800840CA6 /* chess.swift */,
+				E717D76B2EB99B39004CB029 /* WiiMessageBoardView.swift */,
+				E717D7722EB99B3A004CB029 /* SettingsView.swift */,
+				E717D76E2EB99B3A004CB029 /* TVnotomo_ch.swift */,
+				E717D7672EB99B39004CB029 /* News_ch.swift */,
+				E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */,
+				E717D7642EB99B39004CB029 /* Nintendo_ch.swift */,
+				E717D76D2EB99B3A004CB029 /* Forecast_ch.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -81,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				E735562E2E544F91001AAB46 /* WiiClassic.app */,
+				E73556362E544F91001AAB46 /* WiiClassic.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,6 +158,23 @@
 			productReference = E735562E2E544F91001AAB46 /* WiiClassic.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E73556352E544F91001AAB46 /* WiiClassic (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E73556452E544F91001AAB46 /* Build configuration list for PBXNativeTarget "WiiClassic (macOS)" */;
+			buildPhases = (
+				E73556322E544F91001AAB46 /* Sources */,
+				E73556332E544F91001AAB46 /* Frameworks */,
+				E73556342E544F91001AAB46 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WiiClassic (macOS)";
+			productName = "WiiClassic (macOS)";
+			productReference = E73556362E544F91001AAB46 /* WiiClassic.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -133,6 +186,11 @@
 				TargetAttributes = {
 					E735562D2E544F91001AAB46 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
+					};
+					E73556352E544F91001AAB46 = {
+						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -143,7 +201,6 @@
 			knownRegions = (
 				en,
 				Base,
-				ja,
 			);
 			mainGroup = E73556212E544F8A001AAB46;
 			productRefGroup = E735562F2E544F91001AAB46 /* Products */;
@@ -151,6 +208,7 @@
 			projectRoot = "";
 			targets = (
 				E735562D2E544F91001AAB46 /* WiiClassic (iOS) */,
+				E73556352E544F91001AAB46 /* WiiClassic (macOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -160,7 +218,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E735563E2E544F91001AAB46 /* Assets.xcassets in Resources */,
+				E717D7732EB99B3A004CB029 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E73556342E544F91001AAB46 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E717D7742EB99B3A004CB029 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,16 +237,41 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7D7CA842E5E29BF00CA13BB /* Model.swift in Sources */,
-				E7ED5BCB2E5C72D400B1AE9D /* Nintendo_ch.swift in Sources */,
-				E72F778E2E54D443003C7C81 /* TVnotomo_ch.swift in Sources */,
-				E7E16C902E879FEF001948CB /* Forecast_ch.swift in Sources */,
-				E72F778B2E54D406003C7C81 /* SettingsView.swift in Sources */,
-				E735563C2E544F91001AAB46 /* ContentView.swift in Sources */,
-				E7665B462E56399D00AC2BB1 /* News_ch.swift in Sources */,
-				E7ED5BCE2E5CAF5A00B1AE9D /* WiiMessageBoardView.swift in Sources */,
-				E7665B4A2E56542900AC2BB1 /* WiiShop_ch.swift in Sources */,
-				E735563A2E544F91001AAB46 /* WiiClassicApp.swift in Sources */,
+				E717D7812EB99B3A004CB029 /* Model.swift in Sources */,
+				E717D7892EB99B3A004CB029 /* ContentView.swift in Sources */,
+				E717D7772EB99B3A004CB029 /* SaveData.xcdatamodeld in Sources */,
+				E717D7852EB99B3A004CB029 /* TVnotomo_ch.swift in Sources */,
+				E717D78B2EB99B3A004CB029 /* WiiShop_ch.swift in Sources */,
+				E717D7792EB99B3A004CB029 /* News_ch.swift in Sources */,
+				E717D77D2EB99B3A004CB029 /* WiiClassicApp.swift in Sources */,
+				E717D77F2EB99B3A004CB029 /* WiiMessageBoardView.swift in Sources */,
+				E78AE1F72EC5960800840CA6 /* chess.swift in Sources */,
+				E717D7832EB99B3A004CB029 /* Forecast_ch.swift in Sources */,
+				E717D77B2EB99B3A004CB029 /* WiiClassic.xcdatamodeld in Sources */,
+				E717D7752EB99B3A004CB029 /* Nintendo_ch.swift in Sources */,
+				E717D7872EB99B3A004CB029 /* Persistence.swift in Sources */,
+				E717D78D2EB99B3A004CB029 /* SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E73556322E544F91001AAB46 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E717D7822EB99B3A004CB029 /* Model.swift in Sources */,
+				E717D78A2EB99B3A004CB029 /* ContentView.swift in Sources */,
+				E717D7782EB99B3A004CB029 /* SaveData.xcdatamodeld in Sources */,
+				E717D7862EB99B3A004CB029 /* TVnotomo_ch.swift in Sources */,
+				E717D78C2EB99B3A004CB029 /* WiiShop_ch.swift in Sources */,
+				E717D77A2EB99B3A004CB029 /* News_ch.swift in Sources */,
+				E717D77E2EB99B3A004CB029 /* WiiClassicApp.swift in Sources */,
+				E717D7802EB99B3A004CB029 /* WiiMessageBoardView.swift in Sources */,
+				E78AE1F82EC5960800840CA6 /* chess.swift in Sources */,
+				E717D7842EB99B3A004CB029 /* Forecast_ch.swift in Sources */,
+				E717D77C2EB99B3A004CB029 /* WiiClassic.xcdatamodeld in Sources */,
+				E717D7762EB99B3A004CB029 /* Nintendo_ch.swift in Sources */,
+				E717D7882EB99B3A004CB029 /* Persistence.swift in Sources */,
+				E717D78E2EB99B3A004CB029 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,7 +329,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -292,7 +382,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -305,8 +394,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -314,10 +404,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.KokiAndo.WiiClassic;
 				PRODUCT_NAME = WiiClassic;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -328,8 +419,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -337,13 +429,62 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.KokiAndo.WiiClassic;
 				PRODUCT_NAME = WiiClassic;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E73556462E544F91001AAB46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.KokiAndo.WiiClassic;
+				PRODUCT_NAME = WiiClassic;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/WiiClassic (macOS)-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E73556472E544F91001AAB46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.KokiAndo.WiiClassic;
+				PRODUCT_NAME = WiiClassic;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/WiiClassic (macOS)-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -368,7 +509,39 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		E73556452E544F91001AAB46 /* Build configuration list for PBXNativeTarget "WiiClassic (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E73556462E544F91001AAB46 /* Debug */,
+				E73556472E544F91001AAB46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E717D7652EB99B39004CB029 /* SaveData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E717D7662EB99B39004CB029 /* SaveData.xcdatamodel */,
+			);
+			currentVersion = E717D7662EB99B39004CB029 /* SaveData.xcdatamodel */;
+			path = SaveData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		E717D7682EB99B39004CB029 /* WiiClassic.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E717D7692EB99B39004CB029 /* Shared.xcdatamodel */,
+			);
+			currentVersion = E717D7692EB99B39004CB029 /* Shared.xcdatamodel */;
+			path = WiiClassic.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E73556222E544F8A001AAB46 /* Project object */;
 }

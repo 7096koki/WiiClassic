@@ -1,41 +1,36 @@
-// WiiShop_ch.swift
-
 import SwiftUI
 
 // MARK: - モデル
-struct PersonalChannel: Codable, Identifiable {
-    var id = UUID() // 'let' から 'var' に変更
+struct PersonalChannel: Codable, Identifiable, Equatable {
+    var id = UUID()
     var name: String
     var imageName: String
     var color: String
 }
 
-// MARK: - メインビュー
+// MARK: - Wiiショッピングチャンネル
 struct WiiShop_ch: View {
     @Binding var downloadedChannels: [PersonalChannel]
     
-    // ダウンロード可能なチャンネルのリスト
+    // ダウンロード可能なチャンネル
     let availableChannels: [PersonalChannel] = [
-        PersonalChannel(name: "test", imageName: "car.fill", color: "orange"),
+        PersonalChannel(name: "チェスゲーム", imageName: "checkerboard.rectangle", color: "red")
     ]
     
     var body: some View {
         VStack {
             HStack {
-                // ショッピングバッグのアイコン
                 Image(systemName: "cart.fill")
-                    .font(.system(size: 60))
+                    .font(.system(size: 50))
                     .foregroundColor(.white)
-                
                 Text("Wiiショッピングチャンネル")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
             }
-            .padding(.top, 50)
+            .padding(.top, 40)
             
-            // ダウンロード可能なチャンネルのリスト
-            List(availableChannels, id: \.name) { channel in
+            List(availableChannels, id: \.id) { channel in
                 HStack {
                     Image(systemName: channel.imageName)
                         .font(.system(size: 30))
@@ -43,47 +38,45 @@ struct WiiShop_ch: View {
                     
                     Text(channel.name)
                         .font(.headline)
-                        .foregroundColor(.primary)
                     
                     Spacer()
                     
                     Button(action: {
                         self.downloadChannel(channel)
                     }) {
-                        Text("ダウンロード")
+                        Text(isDownloaded(channel) ? "ダウンロード済み" : "ダウンロード")
                             .font(.subheadline)
                             .foregroundColor(.white)
                             .padding(.horizontal, 15)
                             .padding(.vertical, 8)
-                            .background(Color.blue)
+                            .background(isDownloaded(channel) ? Color.gray : Color.blue)
                             .cornerRadius(10)
                     }
+                    .disabled(isDownloaded(channel))
                 }
             }
-            
-            Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(red: 0, green: 1.0, blue: 1.0))
+        .background(Color.blue)
         .navigationTitle("Wiiショッピングチャンネル")
         .navigationBarTitleDisplayMode(.inline)
     }
     
-    // チャンネルをダウンロードして保存する
+    // ダウンロード済みか確認
+    private func isDownloaded(_ channel: PersonalChannel) -> Bool {
+        downloadedChannels.contains(where: { $0.name == channel.name })
+    }
+    
+    // チャンネルをダウンロードして保存
     private func downloadChannel(_ channel: PersonalChannel) {
-        // すでにダウンロード済みか確認
-        if !downloadedChannels.contains(where: { $0.name == channel.name }) {
-            // ダウンロード済みチャンネルリストに追加
+        if !isDownloaded(channel) {
             downloadedChannels.append(channel)
-            
-            // UserDefaultsに保存
             saveChannels()
-            
-            print("\(channel.name)をダウンロードしました。")
+            print("\(channel.name) をダウンロードしました")
         }
     }
     
-    // UserDefaultsにチャンネルを保存する
+    // UserDefaultsにチャンネルを保存
     private func saveChannels() {
         if let encoded = try? JSONEncoder().encode(downloadedChannels) {
             UserDefaults.standard.set(encoded, forKey: "downloadedChannels")
