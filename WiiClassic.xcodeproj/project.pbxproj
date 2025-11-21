@@ -37,6 +37,8 @@
 		E717D78E2EB99B3A004CB029 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7722EB99B3A004CB029 /* SettingsView.swift */; };
 		E78AE1F72EC5960800840CA6 /* chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78AE1F62EC5960800840CA6 /* chess.swift */; };
 		E78AE1F82EC5960800840CA6 /* chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78AE1F62EC5960800840CA6 /* chess.swift */; };
+		E78CCCD22ED1241B00F963CD /* Photo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78CCCD12ED1241B00F963CD /* Photo_ch.swift */; };
+		E78CCCD32ED1241B00F963CD /* Photo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78CCCD12ED1241B00F963CD /* Photo_ch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +62,7 @@
 		E73556382E544F91001AAB46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E73556392E544F91001AAB46 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		E78AE1F62EC5960800840CA6 /* chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chess.swift; sourceTree = "<group>"; };
+		E78CCCD12ED1241B00F963CD /* Photo_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo_ch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,11 +99,12 @@
 				E717D7632EB99B39004CB029 /* Assets.xcassets */,
 				E717D76A2EB99B39004CB029 /* WiiClassicApp.swift */,
 				E717D7702EB99B3A004CB029 /* ContentView.swift */,
+				E78CCCD12ED1241B00F963CD /* Photo_ch.swift */,
 				E717D76C2EB99B3A004CB029 /* Model.swift */,
 				E717D76F2EB99B3A004CB029 /* Persistence.swift */,
 				E717D7652EB99B39004CB029 /* SaveData.xcdatamodeld */,
 				E717D7682EB99B39004CB029 /* WiiClassic.xcdatamodeld */,
-				E78AE1F62EC5960800840CA6 /* chess.swift */,
+				E78AE1FA2ED0744400840CA6 /* PersonalChannel */,
 				E717D76B2EB99B39004CB029 /* WiiMessageBoardView.swift */,
 				E717D7722EB99B3A004CB029 /* SettingsView.swift */,
 				E717D76E2EB99B3A004CB029 /* TVnotomo_ch.swift */,
@@ -136,6 +140,14 @@
 				E73556392E544F91001AAB46 /* macOS.entitlements */,
 			);
 			path = macOS;
+			sourceTree = "<group>";
+		};
+		E78AE1FA2ED0744400840CA6 /* PersonalChannel */ = {
+			isa = PBXGroup;
+			children = (
+				E78AE1F62EC5960800840CA6 /* chess.swift */,
+			);
+			path = PersonalChannel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +263,7 @@
 				E717D7752EB99B3A004CB029 /* Nintendo_ch.swift in Sources */,
 				E717D7872EB99B3A004CB029 /* Persistence.swift in Sources */,
 				E717D78D2EB99B3A004CB029 /* SettingsView.swift in Sources */,
+				E78CCCD22ED1241B00F963CD /* Photo_ch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +285,7 @@
 				E717D7762EB99B3A004CB029 /* Nintendo_ch.swift in Sources */,
 				E717D7882EB99B3A004CB029 /* Persistence.swift in Sources */,
 				E717D78E2EB99B3A004CB029 /* SettingsView.swift in Sources */,
+				E78CCCD32ED1241B00F963CD /* Photo_ch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

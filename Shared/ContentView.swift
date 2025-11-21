@@ -15,7 +15,8 @@ struct ContentView: View {
             ("ニュースチャンネル", "newspaper.fill", Color.green),
             ("Wiiショッピングチャンネル", "bag.fill", Color.blue),
             ("みんなのニンテンドーチャンネル", "circlebadge.2", Color.gray),
-            ("お天気チャンネル", "cloud.sun.fill", Color.blue)
+            ("お天気チャンネル", "cloud.sun.fill", Color.blue),
+            ("写真チャンネル", "cloud.sun.fill", Color.orange),
         ]
         for channel in downloadedChannels {
             baseChannels.append((channel.name, channel.imageName, Color(hex: channel.color)))
@@ -96,6 +97,7 @@ struct ContentView: View {
         case "みんなのニンテンドーチャンネル": Nintendo_ch()
         case "お天気チャンネル": Forecast_ch()
         case "チェスゲーム": Chess_wiiware()
+        case "写真チャンネル": Photo_ch()
         default: Text("\(channelName) チャンネル起動")
         }
     }
