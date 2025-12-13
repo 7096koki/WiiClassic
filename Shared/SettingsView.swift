@@ -5,34 +5,105 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("全般")) {
-                    NavigationLink(destination: AboutAppView()) {
-                        Text("このアプリについて")
-                    }
-                    // ここに制作クレジットへのリンクを追加
-                    NavigationLink(destination: CreditsView()) {
-                        Text("制作クレジット")
-                    }
+            VStack(spacing: 30) {
+                
+                // --- Wii 本体設定 ---
+                NavigationLink(destination: WiiSystemSettingsView()) {
+                    wiiSettingsButton(
+                        title: "Wii本体設定",
+                        systemIcon: "gearshape.fill",
+                        color: Color.blue
+                    )
                 }
                 
-                Section(header: Text("データ管理")) {
-                    List {
-                        ForEach(downloadedChannels, id: \.id) { channel in
-                            HStack {
-                                Image(systemName: channel.imageName)
-                                    .foregroundColor(Color(channel.color))
-                                Text(channel.name)
-                                Spacer()
-                            }
-                        }
-                        .onDelete(perform: deleteChannel)
-                    }
+                // --- データ管理 ---
+                NavigationLink(destination: DataManagementView(downloadedChannels: $downloadedChannels)) {
+                    wiiSettingsButton(
+                        title: "データ管理",
+                        systemIcon: "internaldrive.fill",
+                        color: Color.orange
+                    )
                 }
+                
+                Spacer()
             }
+            .padding(.top, 40)
             .navigationTitle("設定")
             .navigationBarTitleDisplayMode(.inline)
         }
+    }
+}
+
+
+// ===============================
+// MARK: - Wii チャンネル風「正方形」ボタン
+// ===============================
+func wiiSettingsButton(title: String, systemIcon: String, color: Color) -> some View {
+    ZStack {
+        RoundedRectangle(cornerRadius: 26)
+            .fill(color)
+            .frame(width: 400, height: 300)  // ← 大きくした！
+            .shadow(radius: 2)
+        
+        VStack(spacing: 12) {
+            Image(systemName: systemIcon)
+                .font(.system(size: 60))      // ← アイコンも拡大
+                .foregroundColor(.white)
+            
+            Text(title)
+                .font(.system(size: 18, weight: .bold))  // ← 文字サイズも拡大
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 6)
+        }
+    }
+}
+
+// ===============================
+// MARK: - Wii本体設定（旧 全般）
+// ===============================
+struct WiiSystemSettingsView: View {
+    var body: some View {
+        Form {
+            Section {
+                NavigationLink(destination: AboutAppView()) {
+                    Text("このアプリについて")
+                }
+                NavigationLink(destination: CreditsView()) {
+                    Text("制作クレジット")
+                }
+            }
+        }
+        .navigationTitle("Wii本体設定")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+
+// ===============================
+// MARK: - データ管理
+// ===============================
+struct DataManagementView: View {
+    @Binding var downloadedChannels: [PersonalChannel]
+    
+    var body: some View {
+        Form {
+            Section(header: Text("ダウンロード済みチャンネル")) {
+                List {
+                    ForEach(downloadedChannels, id: \.id) { channel in
+                        HStack {
+                            Image(systemName: channel.imageName)
+                                .foregroundColor(Color(hex: channel.color))
+                            Text(channel.name)
+                            Spacer()
+                        }
+                    }
+                    .onDelete(perform: deleteChannel)
+                }
+            }
+        }
+        .navigationTitle("データ管理")
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func deleteChannel(offsets: IndexSet) {
@@ -47,8 +118,10 @@ struct SettingsView: View {
     }
 }
 
-// 既存の AboutAppView はそのまま
 
+// ===============================
+// MARK: - 制作クレジット
+// ===============================
 struct CreditsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -61,7 +134,7 @@ struct CreditsView: View {
                 Text(" - Wii愛好家(仮)")
                 Text("スペシャルサンクス:")
                 Text(" - クラスメイト10(仮)")
-                }
+            }
             .padding(.leading)
             
             Spacer()
@@ -72,6 +145,10 @@ struct CreditsView: View {
     }
 }
 
+
+// ===============================
+// MARK: - このアプリについて
+// ===============================
 struct AboutAppView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
