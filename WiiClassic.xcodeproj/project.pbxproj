@@ -43,6 +43,8 @@
 		E78AE1F82EC5960800840CA6 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78AE1F62EC5960800840CA6 /* Chess.swift */; };
 		E78CCCD22ED1241B00F963CD /* Photo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78CCCD12ED1241B00F963CD /* Photo_ch.swift */; };
 		E78CCCD32ED1241B00F963CD /* Photo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78CCCD12ED1241B00F963CD /* Photo_ch.swift */; };
+		E78F7B732EF52F220050799B /* PhotoPrints_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78F7B722EF52F220050799B /* PhotoPrints_ch.swift */; };
+		E78F7B742EF52F220050799B /* PhotoPrints_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78F7B722EF52F220050799B /* PhotoPrints_ch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,7 @@
 		E77235602ED5888500330CB4 /* MyPencaseCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPencaseCreator.swift; sourceTree = "<group>"; };
 		E78AE1F62EC5960800840CA6 /* Chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chess.swift; sourceTree = "<group>"; };
 		E78CCCD12ED1241B00F963CD /* Photo_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo_ch.swift; sourceTree = "<group>"; };
+		E78F7B722EF52F220050799B /* PhotoPrints_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPrints_ch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +119,7 @@
 				E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */,
 				E717D7642EB99B39004CB029 /* Nintendo_ch.swift */,
 				E717D76D2EB99B3A004CB029 /* Forecast_ch.swift */,
+				E78F7B722EF52F220050799B /* PhotoPrints_ch.swift */,
 				E78CCCD12ED1241B00F963CD /* Photo_ch.swift */,
 				E73069162EE58C2200A2749A /* Today&Tomorrow_ch.swift */,
 				E78AE1FA2ED0744400840CA6 /* PersonalChannel */,
@@ -268,6 +272,7 @@
 				E717D77D2EB99B3A004CB029 /* WiiClassicApp.swift in Sources */,
 				E717D77F2EB99B3A004CB029 /* WiiMessageBoardView.swift in Sources */,
 				E78AE1F72EC5960800840CA6 /* Chess.swift in Sources */,
+				E78F7B732EF52F220050799B /* PhotoPrints_ch.swift in Sources */,
 				E717D7832EB99B3A004CB029 /* Forecast_ch.swift in Sources */,
 				E717D77B2EB99B3A004CB029 /* WiiClassic.xcdatamodeld in Sources */,
 				E717D7752EB99B3A004CB029 /* Nintendo_ch.swift in Sources */,
@@ -292,6 +297,7 @@
 				E717D77E2EB99B3A004CB029 /* WiiClassicApp.swift in Sources */,
 				E717D7802EB99B3A004CB029 /* WiiMessageBoardView.swift in Sources */,
 				E78AE1F82EC5960800840CA6 /* Chess.swift in Sources */,
+				E78F7B742EF52F220050799B /* PhotoPrints_ch.swift in Sources */,
 				E717D7842EB99B3A004CB029 /* Forecast_ch.swift in Sources */,
 				E717D77C2EB99B3A004CB029 /* WiiClassic.xcdatamodeld in Sources */,
 				E717D7762EB99B3A004CB029 /* Nintendo_ch.swift in Sources */,

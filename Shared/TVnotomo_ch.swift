@@ -199,7 +199,6 @@ struct PresetSearchView: View {
                     // 1. 金曜ロードショー (公式ラインナップ)
                     NavigationLink(destination: WebBrowserView(url: "https://kinro.ntv.co.jp/lineup")) {
                         HStack {
-                            Image(systemName: "popcorn.fill").foregroundColor(.yellow)
                             Text("金曜ロードショー (公式ラインナップ)")
                         }
                     }
@@ -207,7 +206,6 @@ struct PresetSearchView: View {
                     // 2. 「時かけタイムライン」ボタン (TokikakeClockViewを使用)
                     NavigationLink(destination: TokikakeClockView()) {
                         HStack {
-                            Image(systemName: "clock.badge.checkmark").foregroundColor(.purple)
                             Text("時かけタイムラインを再現してみました")
                         }
                     }
@@ -215,7 +213,6 @@ struct PresetSearchView: View {
                     // 3. 土曜プレミアム
                     NavigationLink(destination: WebBrowserView(url: "https://www.fujitv.co.jp/premium/")) {
                         HStack {
-                            Image(systemName: "star.fill").foregroundColor(.orange)
                             Text("土曜プレミアム")
                         }
                     }

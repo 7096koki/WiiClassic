@@ -1,225 +1,188 @@
 import SwiftUI
 
-// MARK: - 1. モデル: おみくじの結果とランキング定義
-
-/**
- * OmikujiResult: おみくじの結果とその表示スタイルを定義する構造体
- * rankプロパティを追加し、運勢の強さ（1が最高）を明確にしました。
- */
-struct OmikujiResult: Identifiable, Comparable {
+// MARK: - モデル定義
+// 他のファイルと名前がぶつからないよう、念のため構造体名をユニークにしています
+struct LuckyFortuneModel: Identifiable, Comparable {
     let id = UUID()
-    let name: String // 例: 大々大吉, 凶
-    let description: String // 運勢の説明
-    let color: Color // 結果に応じたテーマカラー
-    let iconName: String // SF Symbolsのアイコン名
-    let rank: Int // 運勢の順位 (1が最高運勢)
+    let name: String
+    let description: String
+    let color: Color
+    let iconName: String
+    let rank: Int
     
-    // Comparableプロトコル実装: ランキング順にソートできるようにする
-    static func < (lhs: OmikujiResult, rhs: OmikujiResult) -> Bool {
+    static func < (lhs: LuckyFortuneModel, rhs: LuckyFortuneModel) -> Bool {
         return lhs.rank < rhs.rank
     }
     
-    // 初期表示用のおみくじ結果。デフォルトの色を .gray に変更し、運勢色との重複を避ける
-    static let defaultResult = OmikujiResult(
+    static let defaultResult = LuckyFortuneModel(
         name: "運勢",
         description: "下のボタンを押して、今日のおみくじを引いてみましょう！",
-        color: .gray, // 互換性のある標準色
+        color: .gray,
         iconName: "questionmark.circle.fill",
         rank: 99
     )
 }
 
-// MARK: - 2. サブビュー: おみくじ結果のカード表示
-
-/**
- * FortuneCardView:
- * OmikujiResultのデータを受け取り、結果を視覚的に表示するカードコンポーネント
- */
-struct FortuneCardView: View {
-    let fortune: OmikujiResult
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            
-            // アイコンと結果名
-            HStack {
-                Image(systemName: fortune.iconName)
-                    .font(.system(size: 40))
-                    .foregroundColor(fortune.color)
-                
-                Text(fortune.name)
-                    .font(.system(size: 48, weight: .black, design: .rounded))
-                    .foregroundColor(.black)
-            }
-            .padding(.bottom, 10)
-            
-            // 説明文
-            Text(fortune.description)
-                .font(.body)
-                .foregroundColor(.gray)
-                .multilineTextAlignment(.center)
-                // 【修正点】テキストがカード内で最大幅を使い、かつ行数制限なしで表示されるように修正
-                .frame(maxWidth: .infinity)
-                .lineLimit(nil)
-            
-        }
-        .padding(30)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white)
-                .shadow(color: fortune.color.opacity(0.3), radius: 15, x: 0, y: 10)
-        )
-        // カードの幅を親ビューの幅の約80%に制限し、見やすさを確保
-        .frame(maxWidth: 400)
-        .transition(.scale.animation(.spring(response: 0.4, dampingFraction: 0.6)))
-    }
-}
-
-// MARK: - 3. サブビュー: 運勢指数表
-
-/**
- * FortuneRankIndexView:
- * 全てのおみくじ結果のランキングをリスト表示するコンポーネント
- */
-struct FortuneRankIndexView: View {
-    let allFortunes: [OmikujiResult] // 運勢の全リスト
-    
-    var sortedFortunes: [OmikujiResult] {
-        // rankプロパティでソート（1位から順番）
-        allFortunes.sorted()
-    }
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("運勢指数表 (ランキング)")
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(.black)
-            
-            VStack(alignment: .leading, spacing: 6) {
-                ForEach(sortedFortunes.filter { $0.rank < 99 }) { fortune in
-                    HStack {
-                        // 順位表示
-                        Text("\(fortune.rank)位")
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                            .frame(width: 40, alignment: .leading)
-                            .foregroundColor(.gray)
-                        
-                        // 運勢名とアイコン
-                        HStack(spacing: 5) {
-                            Image(systemName: fortune.iconName)
-                                .foregroundColor(fortune.color)
-                                .font(.caption)
-                            Text(fortune.name)
-                                .font(.subheadline)
-                                .foregroundColor(.black)
-                        }
-                    }
-                }
-            }
-            .padding(.horizontal)
-            .padding(.vertical, 10)
-            .background(Color.white.opacity(0.8))
-            .cornerRadius(10)
-            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-        }
-        .padding(.top, 20)
-        .padding(.horizontal)
-    }
-}
-
-
-// MARK: - 4. メインチャンネルビュー: 今日と明日の占いラッキーチャンネル
-
-/**
- * DailyFortuneChannelView:
- * チャンネルのメインビュー。おみくじロジックとUIをカプセル化しています。
- */
+// MARK: - メインビュー
 struct TodayandTomorrow_ch: View {
+    @State private var currentFortune: LuckyFortuneModel = .defaultResult
+    @State private var isSpinning = false
+    @State private var countdown = 0
+    @State private var tempIcon = "questionmark.circle.fill"
     
-    // 現在のおみくじの結果を保持するState
-    @State private var currentFortune: OmikujiResult = .defaultResult
-    
-    // おみくじの結果の定義（乱数で選択される候補）
-    private let fortunes: [OmikujiResult] = [
-        // 超ラッキー
-        // ※ ユーザーの要望により、説明文は長いまま維持しています。
-        OmikujiResult(name: "大々大吉", description: "宇宙規模の幸運！何をやっても成功します。予想外のプレゼントや、長年の夢が叶うかもしれません。積極的に行動しましょう。", color: .pink, iconName: "sparkles", rank: 1),
-        OmikujiResult(name: "大大吉", description: "奇跡が起きるかも。大胆な行動が吉と出ます。特に人間関係で大きな進展が期待できます。", color: .red, iconName: "heart.fill", rank: 2),
-        
-        // 良い運勢
-        OmikujiResult(name: "大吉", description: "最高にラッキーな日です！新しい挑戦を始めてみましょう。金運、仕事運ともに絶好調の一日です。", color: .orange, iconName: "crown.fill", rank: 3),
-        OmikujiResult(name: "中吉", description: "良い運勢です。計画通りに進めれば成功します。特に午後の集中力が高いでしょう。", color: .yellow, iconName: "star.fill", rank: 4),
-        OmikujiResult(name: "小吉", description: "そこそこの運勢です。慎重に行動しましょう。大きな決断は避けて、現状維持に努めるのが吉です。", color: .green, iconName: "hand.thumbsup.fill", rank: 5),
-        
-        // 平均的な運勢
-        OmikujiResult(name: "吉", description: "平均的な運勢です。焦らず、地道に過ごしましょう。特に家族との時間を大切にすると運気が上がります。", color: .blue, iconName: "leaf.fill", rank: 6),
-        OmikujiResult(name: "末吉", description: "これから良くなります。夕方以降に期待！今は準備期間として力を蓄えましょう。", color: .purple, iconName: "arrow.up.circle.fill", rank: 7),
-        
-        // 悪い運勢
-        OmikujiResult(name: "小凶", description: "少し注意が必要な日。言動に気をつけましょう。特に誤解が生じやすいので、報告・連絡・相談を徹底しましょう。", color: .red.opacity(0.7), iconName: "exclamationmark.triangle.fill", rank: 8),
-        OmikujiResult(name: "凶", description: "今日は静かに過ごしましょう。明日に期待です。無理せず、早めに休息を取ることをおすすめします。", color: .gray, iconName: "bolt.slash.fill", rank: 9),
-        OmikujiResult(name: "大凶", description: "最大級の不運。全ての行動を最小限に抑えてください。特に貴重品の紛失に注意し、安全第一で過ごしましょう。今日は新しいことを始めないでください。", color: .black, iconName: "m", rank: 10)
+    // おみくじの結果定義
+    private let fortunes: [LuckyFortuneModel] = [
+        LuckyFortuneModel(name: "大々大吉", description: "宇宙規模の幸運！何をやっても成功します。予想外のプレゼントや、長年の夢が叶うかもしれません。", color: .pink, iconName: "sparkles", rank: 1),
+        LuckyFortuneModel(name: "大大吉", description: "奇跡が起きるかも。大胆な行動が吉と出ます。特に人間関係で大きな進展が期待できます。", color: .red, iconName: "heart.fill", rank: 2),
+        LuckyFortuneModel(name: "大吉", description: "最高にラッキーな日です！新しい挑戦を始めてみましょう。金運、仕事運ともに絶好調の一日です。", color: .orange, iconName: "crown.fill", rank: 3),
+        LuckyFortuneModel(name: "中吉", description: "良い運勢です。計画通りに進めれば成功します。特に午後の集中力が高いでしょう。", color: .yellow, iconName: "star.fill", rank: 4),
+        LuckyFortuneModel(name: "小吉", description: "そこそこの運勢です。慎重に行動しましょう。大きな決断は避けて現状維持が吉です。", color: .green, iconName: "hand.thumbsup.fill", rank: 5),
+        LuckyFortuneModel(name: "吉", description: "平均的な運勢です。焦らず、地道に過ごしましょう。家族との時間を大切にすると運気が上がります。", color: .blue, iconName: "leaf.fill", rank: 6),
+        LuckyFortuneModel(name: "末吉", description: "これから良くなります。夕方以降に期待！今は準備期間として力を蓄えましょう。", color: .purple, iconName: "arrow.up.circle.fill", rank: 7),
+        LuckyFortuneModel(name: "小凶", description: "少し注意が必要な日。言動に気をつけましょう。報告・連絡・相談を徹底しましょう。", color: .red.opacity(0.7), iconName: "exclamationmark.triangle.fill", rank: 8),
+        LuckyFortuneModel(name: "凶", description: "今日は静かに過ごしましょう。明日に期待です。無理せず、早めに休息を取ることをおすすめします。", color: .gray, iconName: "bolt.slash.fill", rank: 9),
+        LuckyFortuneModel(name: "大凶", description: "最大級の不運。全ての行動を最小限に抑えてください。安全第一で過ごしましょう。", color: .black, iconName: "exclamationmark.octagon.fill", rank: 10)
     ]
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                ScrollView {
-                    VStack(spacing: 30) {
-                        
-                        Text("今日と明日の占いラッキーチャンネル")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.gray)
-                            .padding(.top, 20)
-                        
-                        // おみくじ結果表示カード
-                        FortuneCardView(fortune: currentFortune)
-                        
-                        // おみくじを引くボタン
-                        Button(action: drawNewFortune) {
-                            Text("おみくじを引く")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding(.vertical, 12)
-                                .padding(.horizontal, 40)
-                                .background(currentFortune.color.opacity(0.8))
-                                .clipShape(Capsule())
-                                .shadow(color: currentFortune.color.opacity(0.5), radius: 10, x: 0, y: 5)
+        ZStack {
+            // 背景色
+            Color(white: 0.95).ignoresSafeArea()
+            
+            ScrollView {
+                VStack(spacing: 30) {
+                    Text("今日と明日の占い\nラッキーチャンネル")
+                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.secondary)
+                        .padding(.top, 40)
+                    
+                    // 演出エリア
+                    ZStack {
+                        if isSpinning {
+                            VStack(spacing: 20) {
+                                Image(systemName: tempIcon)
+                                    .font(.system(size: 80))
+                                    .foregroundColor(.blue)
+                                    // 回転アニメーション
+                                    .rotationEffect(.degrees(isSpinning ? 360 : 0))
+                                    .animation(Animation.linear(duration: 0.15).repeatForever(autoreverses: false), value: isSpinning)
+                                
+                                Text("\(countdown)")
+                                    .font(.system(size: 50, weight: .black, design: .monospaced))
+                                    .foregroundColor(.blue)
+                            }
+                            .transition(.opacity)
+                        } else {
+                            ResultDisplayCard(fortune: currentFortune)
+                                .transition(.asymmetric(insertion: .scale, removal: .opacity))
                         }
-                        
-                        // 運勢指数表を追加
-                        FortuneRankIndexView(allFortunes: fortunes)
-                        
-                        Spacer()
                     }
-                    .padding(.bottom, 20)
+                    .frame(height: 300)
+                    .padding(.horizontal)
+                    
+                    // 抽選ボタン
+                    Button(action: startSequence) {
+                        Text(isSpinning ? "鑑定中..." : "うらなう")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(width: 200, height: 55)
+                            .background(isSpinning ? Color.gray : Color.blue)
+                            .cornerRadius(27.5)
+                            .shadow(radius: isSpinning ? 0 : 4)
+                    }
+                    .disabled(isSpinning)
+                    
+                    // 指数表
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("運勢ランキング")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .padding(.horizontal)
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 12) {
+                                ForEach(fortunes.sorted().filter({ $0.rank < 99 })) { item in
+                                    VStack {
+                                        Text("\(item.rank)位").font(.caption2).foregroundColor(.gray)
+                                        Image(systemName: item.iconName).foregroundColor(item.color)
+                                        Text(item.name).font(.system(size: 10, weight: .bold))
+                                    }
+                                    .frame(width: 55, height: 70)
+                                    .background(Color.white)
+                                    .cornerRadius(10)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                    .opacity(isSpinning ? 0.3 : 1)
+                    
+                    Spacer(minLength: 40)
                 }
             }
-            .navigationTitle("今日の運勢")
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
     
-    /**
-     * drawNewFortune:
-     * fortunes配列からランダムに結果を選択し、Stateを更新します。
-     * 前回と同じ結果が連続しないようにフィルタリングしています。
-     */
-    func drawNewFortune() {
-        // 現在の結果以外からランダムに選択するロジック
-        let availableFortunes = fortunes.filter { $0.id != currentFortune.id }
-        if let newFortune = availableFortunes.randomElement() {
-            withAnimation(.spring()) {
-                currentFortune = newFortune
-            }
-        } else if let newFortune = fortunes.randomElement() {
-             // フィルタリングの結果要素が一つも残らない場合、全体からランダムに選択
-            withAnimation(.spring()) {
-                currentFortune = newFortune
+    // 抽選開始
+    func startSequence() {
+        isSpinning = true
+        countdown = 3
+        
+        // アイコン高速切り替え
+        let iconTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            tempIcon = fortunes.randomElement()?.iconName ?? "questionmark"
+        }
+        
+        // カウントダウン
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            if countdown > 1 {
+                countdown -= 1
+            } else {
+                timer.invalidate()
+                iconTimer.invalidate()
+                
+                withAnimation(.spring()) {
+                    currentFortune = fortunes.randomElement() ?? .defaultResult
+                    isSpinning = false
+                }
             }
         }
+    }
+}
+
+// MARK: - 結果表示用カード（別構造体にしてエラー回避）
+struct ResultDisplayCard: View {
+    let fortune: LuckyFortuneModel
+    
+    var body: some View {
+        VStack(spacing: 15) {
+            HStack(spacing: 15) {
+                Image(systemName: fortune.iconName)
+                    .font(.system(size: 50))
+                    .foregroundColor(fortune.color)
+                
+                Text(fortune.name)
+                    .font(.system(size: 40, weight: .black, design: .rounded))
+            }
+            
+            Text(fortune.description)
+                .font(.callout)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(Color.white)
+        .cornerRadius(25)
+        .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+    }
+}
+
+// MARK: - プレビュー
+struct TodayandTomorrow_ch_Previews: PreviewProvider {
+    static var previews: some View {
+        TodayandTomorrow_ch()
     }
 }

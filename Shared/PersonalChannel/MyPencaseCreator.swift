@@ -1,37 +1,43 @@
 import SwiftUI
 
 // =================================================
-// Data models (iOS14-compatible refactor)
+// Data models
 // =================================================
 
-enum ItemCategory: String, CaseIterable, Codable {
+enum ItemCategory: String, CaseIterable, Codable, Identifiable {
     case pencil = "鉛筆"
     case eraser = "消しゴム"
     case sharpener = "鉛筆削り/キャップ"
     case pen = "ボールペン/多機能ペン"
     case marker = "マーキングペン/筆ペン"
     case adhesive = "のり/修正テープ"
+    
+    var id: String { self.rawValue }
+    
+    var icon: String {
+        switch self {
+        case .pencil: return "pencil"
+        case .eraser: return "square.fill"
+        case .sharpener: return "scissors"
+        case .pen: return "pencil.tip"
+        case .marker: return "highlighter"
+        case .adhesive: return "bandage.fill"
+        }
+    }
 }
 
-// StationeryItem now stores color as hex string for Codable reliability
-struct StationeryItem: Identifiable, Codable {
+struct StationeryItem: Identifiable, Codable, Equatable {
     let id: String
     let category: ItemCategory
     let name: String
     let price: Int
     let lengthCm: Double
     var quantity: Int
-
-    // store color as hex string for Codable
     var displayColorHex: String
 
-    // computed Color for UI (non-codable)
     var displayColor: Color {
         Color(hex: displayColorHex)
-        
     }
-
-    var priceText: String { "\(price)円" }
 
     init(id: String, category: ItemCategory, name: String, price: Int, lengthCm: Double, displayColorHex: String, quantity: Int = 1) {
         self.id = id
@@ -44,392 +50,270 @@ struct StationeryItem: Identifiable, Codable {
     }
 }
 
-struct PencilCase: Identifiable, Codable {
-    var id: String? = UUID().uuidString
-    var name: String
-    var type: String
-    var items: [StationeryItem]
+// =================================================
+// View Model
+// =================================================
 
+class PencilCaseStore: ObservableObject {
+    @Published var items: [StationeryItem] = []
+    @Published var caseName: String = "マイ・ベスト・ペンケース"
+    @Published var selectedType: String = "普段使い"
+    
     var totalCost: Int {
         items.reduce(0) { $0 + ($1.price * $1.quantity) }
     }
-
-    init(name: String, type: String = "普段使い", items: [StationeryItem] = []) {
-        self.name = name
-        self.type = type
-        self.items = items
+    
+    var usagePercentage: Double {
+        let totalLen = items.reduce(0) { $0 + ($1.lengthCm * Double($1.quantity)) }
+        let capacity = 40.0 // 収納限界
+        return min(100.0, (totalLen / capacity) * 100.0)
     }
-}
-
-struct MockData {
-    static let initialItems: [StationeryItem] = [
-
-        // ======================================================
-        // MARK: シャーペン（mono graph シリーズ）
-        // ======================================================
-        StationeryItem(id: "sharp_monograf_fine", category: .pen,
-                       name: "MONO graph fine", price: 1320, lengthCm: 14.7, displayColorHex: "FFFFFF"),
-
-        StationeryItem(id: "sharp_monograf_tune", category: .pen,
-                       name: "MONO graph TUNE", price: 990, lengthCm: 14.7, displayColorHex: "1E90FF"),
-
-        StationeryItem(id: "sharp_monograf_lite", category: .pen,
-                       name: "MONO graph LITE", price: 660, lengthCm: 14.7, displayColorHex: "87CEFA"),
-
-        StationeryItem(id: "sharp_monograf_grip", category: .pen,
-                       name: "MONO graph GRIP", price: 880, lengthCm: 14.7, displayColorHex: "0000FF"),
-
-        StationeryItem(id: "sharp_monograf_work", category: .pen,
-                       name: "MONO graph WORK", price: 1540, lengthCm: 14.7, displayColorHex: "2F4F4F"),
-
-        // ======================================================
-        // MARK: 多機能ペン
-        // ======================================================
-        StationeryItem(id: "multi_monograf_multi", category: .pen,
-                       name: "MONO graph MULTI", price: 1980, lengthCm: 14.8, displayColorHex: "333333"),
-
-        // ======================================================
-        // MARK: 消しゴム類（MONO シリーズ）
-        // ======================================================
-        StationeryItem(id: "eraser_mono_white", category: .eraser,
-                       name: "MONO 消しゴム（白）", price: 110, lengthCm: 5.5, displayColorHex: "FFFFFF"),
-
-        StationeryItem(id: "eraser_mono_black", category: .eraser,
-                       name: "MONO 消しゴム（ブラック）", price: 110, lengthCm: 5.5, displayColorHex: "000000"),
-
-        StationeryItem(id: "eraser_mono_tough", category: .eraser,
-                       name: "MONO タフ", price: 220, lengthCm: 5.5, displayColorHex: "222222"),
-
-        StationeryItem(id: "eraser_mono_light", category: .eraser,
-                       name: "MONO ライト", price: 110, lengthCm: 5.5, displayColorHex: "E0E0E0"),
-
-        StationeryItem(id: "eraser_mono_natural", category: .eraser,
-                       name: "MONO ナチュラル", price: 150, lengthCm: 5.5, displayColorHex: "C4A484"),
-
-        StationeryItem(id: "eraser_mono_colors", category: .eraser,
-                       name: "MONO カラーズ", price: 150, lengthCm: 5.5, displayColorHex: "FF69B4"),
-
-        StationeryItem(id: "eraser_mono_smart", category: .eraser,
-                       name: "MONO スマート", price: 150, lengthCm: 6.0, displayColorHex: "B0C4DE"),
-
-        StationeryItem(id: "eraser_mono_airtouch", category: .eraser,
-                       name: "MONO エアタッチ", price: 198, lengthCm: 5.5, displayColorHex: "5DADEC"),
-
-        StationeryItem(id: "eraser_mono_dustcatch", category: .eraser,
-                       name: "MONO ダストキャッチ", price: 198, lengthCm: 5.5, displayColorHex: "333366"),
-
-        StationeryItem(id: "eraser_mono_nondust", category: .eraser,
-                       name: "MONO ノンダスト", price: 180, lengthCm: 5.5, displayColorHex: "AAAAAA"),
-
-        StationeryItem(id: "eraser_mono_easy", category: .eraser,
-                       name: "MONO もっとかる～く消せる", price: 200, lengthCm: 5.5, displayColorHex: "00CED1"),
-
-        StationeryItem(id: "eraser_mono_study", category: .eraser,
-                       name: "MONO 学習用消しゴム", price: 110, lengthCm: 5.5, displayColorHex: "6495ED"),
-
-        StationeryItem(id: "eraser_mono_sand", category: .eraser,
-                       name: "MONO サンド（砂消しゴム）", price: 160, lengthCm: 5.5, displayColorHex: "C2B280"),
-
-        StationeryItem(id: "eraser_monostick", category: .eraser,
-                       name: "MONO スティック", price: 180, lengthCm: 11.0, displayColorHex: "FFFFFF"),
-
-        StationeryItem(id: "eraser_monowon", category: .eraser,
-                       name: "MONO ワン", price: 240, lengthCm: 7.0, displayColorHex: "0000FF"),
-
-        StationeryItem(id: "eraser_monozero", category: .eraser,
-                       name: "MONO ゼロ", price: 330, lengthCm: 12.0, displayColorHex: "FFFFFF"),
-
-        StationeryItem(id: "eraser_ippo_darkpencil", category: .eraser,
-                       name: "ippo! 濃いえんぴつ用消しゴム", price: 110, lengthCm: 5.5, displayColorHex: "8B4513"),
-
-        // ======================================================
-        // MARK: 既存の商品
-        // ======================================================
-        StationeryItem(id: "marker_ippo", category: .marker,
-                       name: "ippo! なまえペン", price: 165, lengthCm: 14.5, displayColorHex: "0000FF"),
-
-        StationeryItem(id: "glue_pit", category: .adhesive,
-                       name: "PiT スティックのり", price: 132, lengthCm: 9.0, displayColorHex: "00B291"),
-
-        StationeryItem(id: "tape_corre", category: .adhesive,
-                       name: "MONO 修正テープ", price: 330, lengthCm: 8.0, displayColorHex: "C4003E"),
-
-        StationeryItem(id: "pencil_mono100", category: .pencil,
-                       name: "MONO 100 (HB)", price: 165, lengthCm: 17.5, displayColorHex: "000000")
-    ]
-
-    static let caseTypes = ["普段使い", "仕事用", "コレクター用", "学生用", "趣味用"]
-}
-
-
-
-// =================================================
-// Main View (PencilCase creator) - iOS14 compatible
-// =================================================
-struct PencilCaseCreatorView: View {
-
-    @State private var currentPencilCase = PencilCase(name: "My Virtual TOMBOW Case")
-    @State private var savedCases: [PencilCase] = []
-    @State private var showingItemSelector = false
-    @State private var newCaseName: String = "My Virtual TOMBOW Case"
-    @State private var selectedCaseType: String = MockData.caseTypes[0]
-
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-
-                // MARK: タイトル
-                VStack(spacing: 4) {
-                    Text("バーチャルペンケースクリエイター")
-                        .font(.system(size: 28, weight: .heavy))
-                    Text("〜 TOMBOW 文房具で自由に作る 〜")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-                .padding(.top, 10)
-
-                // MARK: ケース設定
-                VStack(alignment: .leading, spacing: 12) {
-
-                    Text("ケース設定")
-                        .font(.headline)
-
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("ケース名")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-
-                        TextField("ペンケース名", text: $newCaseName)
-                            .padding(10)
-                            .background(Color(.secondarySystemBackground))
-                            .cornerRadius(10)
-                            .onChange(of: newCaseName) {
-                                currentPencilCase.name = $0
-                            }
-
-                        Text("タイプ")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-
-                        Picker("", selection: $selectedCaseType) {
-                            ForEach(MockData.caseTypes, id: \.self) { type in
-                                Text(type)
-                            }
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        .padding(10)
-                        .background(Color(.secondarySystemBackground))
-                        .cornerRadius(10)
-                        .onChange(of: selectedCaseType) {
-                            currentPencilCase.type = $0
-                        }
-                    }
-                }
-                .padding()
-                .background(Color.white)
-                .cornerRadius(18)
-                .shadow(color: .black.opacity(0.05), radius: 8)
-
-                // MARK: 合計金額
-                VStack {
-                    CostSummaryView(currentPencilCase: $currentPencilCase)
-                }
-                .padding()
-                .background(Color.white)
-                .cornerRadius(18)
-                .shadow(color: .black.opacity(0.05), radius: 8)
-
-                // MARK: ケースレイアウト
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("ケース内部イメージ")
-                        .font(.headline)
-
-                    PencilCaseLayoutView(items: $currentPencilCase.items)
-                        .frame(height: 150)
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                }
-                .padding()
-                .background(Color.white)
-                .cornerRadius(18)
-                .shadow(color: .black.opacity(0.05), radius: 8)
-
-                // MARK: ボタン
-                HStack(spacing: 20) {
-
-                    Button(action: { showingItemSelector = true }) {
-                        Text("文房具を追加")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.green)
-                            .cornerRadius(12)
-                            .shadow(color: .green.opacity(0.3), radius: 5)
-                    }
-
-                    Button(action: { saveCase() }) {
-                        Text("保存")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(12)
-                            .shadow(color: .blue.opacity(0.3), radius: 5)
-                    }
-                }
-                .padding(.horizontal)
-
-                // MARK: アイテム一覧
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("選択中の文房具")
-                        .font(.headline)
-
-                    ForEach(currentPencilCase.items.indices, id: \.self) { idx in
-                        let binding = Binding<StationeryItem>(
-                            get: { currentPencilCase.items[idx] },
-                            set: { currentPencilCase.items[idx] = $0 }
-                        )
-
-                        let item = binding.wrappedValue
-
-                        HStack {
-                            Circle()
-                                .fill(item.displayColor)
-                                .frame(width: 20, height: 20)
-
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                Text(item.priceText)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-
-                            Spacer()
-
-                            Stepper(value: binding.quantity, in: 1...100) {
-                                Text("\(binding.quantity.wrappedValue)個")
-                            }
-                        }
-                    }
-                    .frame(height: 350)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                }
-                .padding(.horizontal)
-
-            }
-            .padding(.bottom, 30)
-        }
-        .background(Color(.systemGroupedBackground))
-        .sheet(isPresented: $showingItemSelector) {
-            ItemSelectionView(
-                allItems: MockData.initialItems,
-                currentItems: $currentPencilCase.items
-            )
-        }
-    }
-
-
-    func deleteItem(at offsets: IndexSet) {
-        currentPencilCase.items.remove(atOffsets: offsets)
-    }
-
-    func saveCase() {
-        var caseToSave = currentPencilCase
-        caseToSave.name = newCaseName
-        caseToSave.type = selectedCaseType
-
-        if let index = savedCases.firstIndex(where: { $0.id == currentPencilCase.id }) {
-            savedCases[index] = caseToSave
-            print("ケースを更新しました: \(caseToSave.name) (ID: \(caseToSave.id ?? "-"))")
+    
+    func addItem(_ item: StationeryItem) {
+        if let index = items.firstIndex(where: { $0.id == item.id }) {
+            items[index].quantity += 1
         } else {
-            caseToSave.id = UUID().uuidString
-            savedCases.append(caseToSave)
-            print("新しいケースを保存しました: \(caseToSave.name) (ID: \(caseToSave.id ?? "-"))")
+            items.append(item)
         }
+    }
+    
+    func removeItem(at offsets: IndexSet) {
+        items.remove(atOffsets: offsets)
     }
 }
 
 // =================================================
-// Cost summary view (unchanged logic, iOS14-safe)
+// Main View
 // =================================================
-struct CostSummaryView: View {
-    @Binding var currentPencilCase: PencilCase
 
+struct MyPencaseCreator: View {
+    @StateObject private var store = PencilCaseStore()
+    @State private var showingSelector = false
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text("合計金額: \(currentPencilCase.totalCost) 円")
-                .font(.title2.bold())
-                .foregroundColor(.red)
-
-            DisclosureGroup("内訳 (タップで表示)") {
-                VStack(alignment: .leading) {
-                    ForEach(currentPencilCase.items) { item in
-                        HStack {
-                            Text("- \(item.name)")
-                            Spacer()
-                            Text("\(item.price)円 × \(item.quantity) = \(item.price * item.quantity)円")
+        NavigationView {
+            ZStack(alignment: .bottom) {
+                Color(.systemGroupedBackground).ignoresSafeArea()
+                
+                ScrollView {
+                    VStack(spacing: 16) {
+                        // --- ケースのビジュアル表示 ---
+                        PencilCasePreviewCard(store: store)
+                        
+                        // --- 設定セクション ---
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack {
+                                Text("ケース設定")
+                                    .font(.headline)
+                                Spacer()
+                                Text("合計: \(store.totalCost)円")
+                                    .font(.headline)
+                                    .foregroundColor(.red)
+                            }
+                            
+                            TextField("ペンケース名を入力", text: $store.caseName)
+                                .padding(12)
+                                .background(Color(.secondarySystemGroupedBackground))
+                                .cornerRadius(10)
+                            
+                            // iOS 14のPicker
+                            Picker("タイプ", selection: $store.selectedType) {
+                                ForEach(["普段使い", "学校用", "お絵描き用", "本気"], id: \.self) {
+                                    Text($0).tag($0)
+                                }
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                        }
+                        .padding()
+                        .background(Color(.systemBackground))
+                        .cornerRadius(16)
+                        
+                        // --- アイテムリスト ---
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("中身のリスト")
+                                .font(.headline)
+                                .padding(.horizontal)
+                            
+                            if store.items.isEmpty {
+                                Text("右下のボタンから文房具を追加")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .frame(maxWidth: .infinity, minHeight: 100)
+                            } else {
+                                ForEach(store.items) { item in
+                                    StationeryRow(item: item, store: store)
+                                }
+                            }
                         }
                     }
-                    if currentPencilCase.items.isEmpty {
-                        Text("アイテムが選択されていません。")
-                            .foregroundColor(.secondary)
-                    }
+                    .padding()
+                    .padding(.bottom, 100)
                 }
-                .padding(.leading)
+                
+                // --- アクションボタン ---
+                Button(action: { showingSelector = true }) {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                        Text("文房具を追加する")
+                    }
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .cornerRadius(16)
+                    .padding()
+                    .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 4)
+                }
+            }
+            .navigationTitle("Pencase Creator")
+            .sheet(isPresented: $showingSelector) {
+                ItemPickerView(store: store)
             }
         }
-        .padding(.horizontal)
     }
 }
 
-// =================================================
-// Item selection view (iOS14-friendly search)
-// =================================================
-struct ItemSelectionView: View {
-    let allItems: [StationeryItem]
-    @Binding var currentItems: [StationeryItem]
+// --- 個別アイテム行 ---
+struct StationeryRow: View {
+    let item: StationeryItem
+    @ObservedObject var store: PencilCaseStore
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            RoundedRectangle(cornerRadius: 4)
+                .fill(item.displayColor)
+                .frame(width: 8, height: 32)
+            
+            VStack(alignment: .leading) {
+                Text(item.name).font(.system(.body, design: .rounded).bold())
+                Text("\(item.price)円").font(.caption).foregroundColor(.secondary)
+            }
+            
+            Spacer()
+            
+            HStack(spacing: 15) {
+                Button(action: { updateQty(-1) }) {
+                    Image(systemName: "minus.circle.fill")
+                        .font(.title3)
+                }
+                Text("\(item.quantity)").font(.system(.body, design: .monospaced))
+                Button(action: { updateQty(1) }) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title3)
+                }
+            }
+            .foregroundColor(.blue)
+        }
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+    }
+    
+    private func updateQty(_ delta: Int) {
+        if let idx = store.items.firstIndex(of: item) {
+            let newVal = store.items[idx].quantity + delta
+            if newVal <= 0 {
+                withAnimation {
+                    store.items.remove(at: idx)
+                }
+            } else {
+                store.items[idx].quantity = newVal
+            }
+        }
+    }
+}
+
+// --- ペンケースのプレビュー ---
+struct PencilCasePreviewCard: View {
+    @ObservedObject var store: PencilCaseStore
+    
+    // iOS 14ではカスタムLayoutがないためLazyVGridで代用
+    let columns = [GridItem(.adaptive(minimum: 40))]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Pencase View").font(.caption.bold()).foregroundColor(.secondary)
+                Spacer()
+                Text("収納率: \(Int(store.usagePercentage))%").font(.caption.bold())
+                    .foregroundColor(store.usagePercentage > 90 ? .red : .blue)
+            }
+            
+            ZStack(alignment: .topLeading) {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(LinearGradient(gradient: Gradient(colors: [Color(hex: "E8E8E8"), Color(hex: "CCCCCC")]), startPoint: .top, endPoint: .bottom))
+                
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 8) {
+                        ForEach(store.items) { item in
+                            ForEach(0..<item.quantity, id: \.self) { _ in
+                                RoundedRectangle(cornerRadius: 3)
+                                    .fill(item.displayColor)
+                                    .frame(height: 8)
+                                    .frame(width: CGFloat(item.lengthCm * 3))
+                            }
+                        }
+                    }
+                    .padding()
+                }
+            }
+            .frame(height: 140)
+        }
+    }
+}
+
+// --- アイテム選択画面 (iOS 14互換) ---
+struct ItemPickerView: View {
+    @ObservedObject var store: PencilCaseStore
     @Environment(\.presentationMode) var presentationMode
-
     @State private var searchText = ""
-
+    
+    let allItems = MockData.initialItems
+    
     var filteredItems: [StationeryItem] {
         if searchText.isEmpty { return allItems }
-        return allItems.filter { $0.name.localizedStandardContains(searchText) }
+        return allItems.filter { $0.name.lowercased().contains(searchText.lowercased()) }
     }
-
+    
     var body: some View {
         NavigationView {
             VStack {
-                // Search text field (iOS14 replacement for .searchable)
+                // 自作検索バー (iOS 14用)
                 HStack {
-                    Image(systemName: "magnifyingglass")
-                    TextField("アイテムを検索", text: $searchText)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Image(systemName: "magnifyingglass").foregroundColor(.secondary)
+                    TextField("文房具を検索", text: $searchText)
+                    if !searchText.isEmpty {
+                        Button(action: { searchText = "" }) {
+                            Image(systemName: "xmark.circle.fill").foregroundColor(.secondary)
+                        }
+                    }
                 }
-                .padding()
-
+                .padding(8)
+                .background(Color(.systemGray6))
+                .cornerRadius(10)
+                .padding(.horizontal)
+                
                 List {
-                    ForEach(ItemCategory.allCases, id: \.self) { category in
-                        let itemsInCategory = filteredItems.filter { $0.category == category }
-                        if !itemsInCategory.isEmpty {
-                            Section(header: Text(category.rawValue).font(.headline)) {
-                                ForEach(itemsInCategory) { item in
-                                    HStack {
-                                        Circle()
-                                            .fill(item.displayColor)
-                                            .frame(width: 15, height: 15)
-                                        Text(item.name)
-                                        Spacer()
-                                        Text(item.priceText)
-                                        Button("追加") {
-                                            addItem(item)
+                    ForEach(ItemCategory.allCases) { cat in
+                        let items = filteredItems.filter { $0.category == cat }
+                        if !items.isEmpty {
+                            Section(header: Text(cat.rawValue)) {
+                                ForEach(items) { item in
+                                    Button(action: {
+                                        withAnimation { store.addItem(item) }
+                                    }) {
+                                        HStack {
+                                            Circle().fill(item.displayColor).frame(width: 8)
+                                            VStack(alignment: .leading) {
+                                                Text(item.name).foregroundColor(.primary)
+                                                Text("\(item.price)円").font(.caption).foregroundColor(.secondary)
+                                            }
+                                            Spacer()
+                                            Image(systemName: "plus")
+                                                .font(.caption.bold())
+                                                .foregroundColor(.blue)
                                         }
-                                        .padding(.horizontal, 8)
-                                        .padding(.vertical, 6)
-                                        .background(Color.blue)
-                                        .foregroundColor(.white)
-                                        .cornerRadius(6)
                                     }
                                 }
                             }
@@ -438,87 +322,32 @@ struct ItemSelectionView: View {
                 }
                 .listStyle(InsetGroupedListStyle())
             }
-            .navigationBarTitle("文房具を選択", displayMode: .inline)
-            .navigationBarItems(trailing: Button("閉じる") { presentationMode.wrappedValue.dismiss() })
-        }
-    }
-
-    func addItem(_ item: StationeryItem) {
-        // If exists, increment quantity
-        if let index = currentItems.firstIndex(where: { $0.id == item.id }) {
-            currentItems[index].quantity += 1
-        } else {
-            currentItems.append(item)
+            .navigationTitle("カタログ")
+            .navigationBarItems(trailing: Button("閉じる") {
+                presentationMode.wrappedValue.dismiss()
+            })
         }
     }
 }
 
 // =================================================
-// Pencil case layout simulation (simplified & safe)
+// Utilities
 // =================================================
-struct PencilCaseLayoutView: View {
-    @Binding var items: [StationeryItem]
-    let totalCaseLength: Double = 20.0
 
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color(hex: "D8C4A9") )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .strokeBorder(Color.black, lineWidth: 2)
-                    )
 
-                VStack(alignment: .leading) {
-                    Text("収納率: \(String(format: "%.1f", usagePercentage))%")
-                        .font(.caption.bold())
-                        .foregroundColor(.black)
-                        .padding(.top, 5)
-                        .padding(.leading, 10)
-
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 4) {
-                            ForEach(items) { item in
-                                let widthRatio = item.lengthCm / totalCaseLength
-                                let itemWidth = max(10, geometry.size.width * CGFloat(widthRatio) * CGFloat(item.quantity) * 0.5)
-
-                                VStack {
-                                    RoundedRectangle(cornerRadius: 3)
-                                        .fill(item.displayColor)
-                                        .frame(width: itemWidth, height: 40)
-                                        .overlay(
-                                            Text("\(item.quantity)x")
-                                                .font(.caption2)
-                                                .foregroundColor(item.displayColorHex.lowercased() == "000000" ? .white : .black)
-                                        )
-
-                                    Text(String(item.name.prefix(8)) + "...")
-                                        .font(.system(size: 8))
-                                }
-                                .padding(.horizontal, 1)
-                            }
-                        }
-                        .padding(.horizontal, 5)
-                        .frame(height: 80, alignment: .top)
-                    }
-                }
-            }
-        }
-    }
-
-    var usagePercentage: Double {
-        let totalItemLength = items.reduce(0) { $0 + ($1.lengthCm * Double($1.quantity)) }
-        let maxStorageLength = 25.0
-        return min(100.0, (totalItemLength / maxStorageLength) * 100.0)
-    }
+struct MockData {
+    static let initialItems: [StationeryItem] = [
+        StationeryItem(id: "s1", category: .pen, name: "MONO graph fine", price: 1320, lengthCm: 14.7, displayColorHex: "222222"),
+        StationeryItem(id: "s2", category: .pen, name: "MONO graph TUNE", price: 990, lengthCm: 14.7, displayColorHex: "3B82F6"),
+        StationeryItem(id: "e1", category: .eraser, name: "MONO 消しゴム", price: 110, lengthCm: 5.5, displayColorHex: "FFFFFF"),
+        StationeryItem(id: "e2", category: .eraser, name: "MONO ブラック", price: 110, lengthCm: 5.5, displayColorHex: "111111"),
+        StationeryItem(id: "a1", category: .adhesive, name: "PiT スティックのり", price: 132, lengthCm: 9.0, displayColorHex: "10B981"),
+        StationeryItem(id: "p1", category: .pencil, name: "MONO 100", price: 165, lengthCm: 17.5, displayColorHex: "1F2937")
+    ]
 }
 
-// =================================================
-// Entry point: MyPencaseCreator()
-// =================================================
-struct MyPencaseCreator: View {
-    var body: some View {
-        PencilCaseCreatorView()
+struct MyPencaseCreator_Previews: PreviewProvider {
+    static var previews: some View {
+        MyPencaseCreator()
     }
 }
