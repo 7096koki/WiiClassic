@@ -1,173 +1,155 @@
 import SwiftUI
 
-// 1ページあたりのチャンネル数 (2列の場合、5行で1ページで10個)
-let channelsPerPage = 10
-
+// MARK: - メインメニュー View
 struct ContentView: View {
-
-<<<<<<< HEAD
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass // 端末のサイズクラスを判定
-    @Binding var downloadedChannels: [PersonalChannel] // @Bindingに変更
-=======
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Binding var downloadedChannels: [PersonalChannel]
->>>>>>> develop
     
-    // MARK: - 時間管理
     @State private var currentTime: Date = Date()
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    // MARK: - チャンネルリスト
+    let channelsPerPage = 10
+
+    // MARK: - チャンネルデータの合成
     var channels: [(String, String, Color)] {
-        var baseChannels: [(String, String, Color)] = [
+        var base: [(String, String, Color)] = [
             ("テレビの友チャンネル", "tv.fill", Color.blue),
             ("ニュースチャンネル", "newspaper.fill", Color.green),
             ("Wiiショッピングチャンネル", "bag.fill", Color.blue),
-<<<<<<< HEAD
-=======
             ("みんなのニンテンドーチャンネル", "circlebadge.2", Color.gray),
             ("お天気チャンネル", "cloud.sun.fill", Color.blue),
->>>>>>> develop
+            ("写真チャンネル", "photo.on.rectangle.angled", Color.orange),
+            ("きょうとあしたの占いﾗｯｷｰﾁｬﾝﾈﾙ", "star.circle.fill", Color.purple),
+            ("デジカメプリントチャンネル", "camera.on.rectangle", Color.blue)
         ]
-        for channel in downloadedChannels {
-            baseChannels.append((channel.name, channel.imageName, Color(hex: channel.color)))
+        
+        for c in downloadedChannels {
+            base.append((c.name, c.imageName, getColor(from: c.color)))
         }
-        return baseChannels
+        
+        return base
+    }
+
+    private func getColor(from colorName: String) -> Color {
+        switch colorName.lowercased() {
+        case "blue": return .blue
+        case "green": return .green
+        case "orange": return .orange
+        case "purple": return .purple
+        case "black": return .black
+        case "gray": return .gray
+        case "red": return .red
+        default: return .blue
+        }
     }
     
-    // MARK: - レイアウト構成
     var columns: [GridItem] {
         let count = horizontalSizeClass == .regular ? 4 : 2
         return Array(repeating: .init(.flexible()), count: count)
     }
-
+    
     var pages: [[(String, String, Color)]] {
-        var pages: [[(String, String, Color)]] = []
-        let totalChannels = channels.count
+        var result: [[(String, String, Color)]] = []
+        let total = channels.count
         
-        for i in stride(from: 0, to: totalChannels, by: channelsPerPage) {
-            let endIndex = min(i + channelsPerPage, totalChannels)
-            var pageChannels = Array(channels[i..<endIndex])
-            
-            // 足りない部分を空白で埋める
-            let dummyName = "　"
-            let dummyChannel = (dummyName, "", Color.gray.opacity(0.2))
-            let dummyCount = channelsPerPage - pageChannels.count
-            if dummyCount > 0 {
-                pageChannels.append(contentsOf: Array(repeating: dummyChannel, count: dummyCount))
-            }
-            pages.append(pageChannels)
+        for i in stride(from: 0, to: total, by: channelsPerPage) {
+            let end = min(i + channelsPerPage, total)
+            var page = Array(channels[i..<end])
+            let dummy = ("DUMMY", "", Color.gray.opacity(0.25))
+            page.append(contentsOf: Array(repeating: dummy, count: max(0, channelsPerPage - page.count)))
+            result.append(page)
         }
-        return pages
+        
+        let dummyEmpty = ("DUMMY", "", Color.gray.opacity(0.25))
+        for _ in 0..<3 { result.append(Array(repeating: dummyEmpty, count: channelsPerPage)) }
+        return result
     }
     
-    // MARK: - メインビュー
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                
-                // チャンネルページ
-                TabView {
-                    ForEach(pages.indices, id: \.self) { pageIndex in
-                        let page = pages[pageIndex]
-                        
-                        LazyVGrid(columns: columns, spacing: 20) {
-                            ForEach(page.indices, id: \.self) { channelIndex in
-                                let channel = page[channelIndex]
-                                
-                                if channel.0 != "　" {
-                                    NavigationLink(destination: getDestinationView(channelName: channel.0)) {
-                                        ChannelIcon(
-                                            name: channel.0,
-                                            imageName: channel.1,
-                                            color: channel.2
-                                        )
+            ZStack(alignment: .bottom) {
+                VStack(spacing: 0) {
+                    TabView {
+                        ForEach(pages.indices, id: \.self) { pageIndex in
+                            LazyVGrid(columns: columns, spacing: 20) {
+                                ForEach(pages[pageIndex].indices, id: \.self) { i in
+                                    let channel = pages[pageIndex][i]
+                                    if channel.0 == "DUMMY" {
+                                        ChannelIcon(name: "", imageName: "", color: channel.2)
+                                    } else {
+                                        NavigationLink(destination: getDestinationView(channelName: channel.0)) {
+                                            ChannelIcon(name: channel.0, imageName: channel.1, color: channel.2)
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
                                     }
-                                    .buttonStyle(PlainButtonStyle())
-                                } else {
-                                    ChannelIcon(
-                                        name: channel.0,
-                                        imageName: channel.1,
-                                        color: channel.2
-                                    )
                                 }
                             }
+                            .padding()
                         }
-                        .padding(.horizontal)
-                        .padding(.bottom, 20)
                     }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    
+                    Spacer().frame(height: 180)
                 }
-<<<<<<< HEAD
-                .padding()
                 
-                Spacer()
-            }
-            .background(Color.white)
-            .edgesIgnoringSafeArea(.all)
-=======
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
-                
-                // MARK: - 下部フラットゾーン
+                // 下部時計エリア
                 ZStack(alignment: .top) {
-                    // 灰色ゾーン本体
                     Color.gray.opacity(0.35)
-                        .frame(height: 180) // ← ここで少し伸ばした！
+                        .frame(height: 180)
                         .ignoresSafeArea(edges: .bottom)
                     
-                    // 水色ライン（境界線を太く）
                     Rectangle()
                         .fill(Color(red: 0.3, green: 0.7, blue: 1.0))
                         .frame(height: 4)
-                        .frame(maxWidth: .infinity)
-                        .edgesIgnoringSafeArea(.horizontal)
                     
-                    // 時計（中央配置）
-                    VStack {
+                    VStack(spacing: 4) {
                         Spacer()
                         SevenSegmentClockView(currentTime: currentTime)
-                            .onReceive(timer) { input in
-                                currentTime = input
-                            }
+                            .onReceive(timer) { currentTime = $0 }
                         Spacer()
                     }
-                    .frame(height: 180)
                 }
+                .frame(height: 180)
             }
-            .background(Color.white.ignoresSafeArea())
             .navigationBarHidden(true)
->>>>>>> develop
         }
     }
     
-    // MARK: - チャンネル遷移先
+    // MARK: - チャンネル遷移ロジック (switch文)
     @ViewBuilder
-    func getDestinationView(channelName: String) -> some View {
-        switch channelName {
-<<<<<<< HEAD
-        case "テレビの友チャンネル":
-            TVnotomo_ch()
-        case "ニュースチャンネル":
-            News_ch()
-        case "Wiiショッピングチャンネル":
-            // ここで$downloadedChannelsを渡す
-            WiiShop_ch(downloadedChannels: $downloadedChannels)
-        default:
-            EmptyView()
-=======
-        case "テレビの友チャンネル": TVnotomo_ch()
-        case "ニュースチャンネル": News_ch()
-        case "Wiiショッピングチャンネル": WiiShop_ch(downloadedChannels: $downloadedChannels)
-        case "みんなのニンテンドーチャンネル": Nintendo_ch()
-        case "お天気チャンネル": Forecast_ch()
-        default:
-            Text("\(channelName) チャンネル起動")
->>>>>>> develop
+        func getDestinationView(channelName: String) -> some View {
+            switch channelName {
+            case "テレビの友チャンネル": TVnotomo_ch()
+            case "ニュースチャンネル": News_ch()
+            case "Wiiショッピングチャンネル": WiiShop_ch(downloadedChannels: $downloadedChannels)
+            case "みんなのニンテンドーチャンネル": Nintendo_ch()
+            case "お天気チャンネル": Forecast_ch()
+            case "チェスゲーム": Chess_wiiware()
+            case "写真チャンネル": Photo_ch()
+            case "マイペンケースクリエイター": MyPencaseCreator()
+            case "きょうとあしたの占いﾗｯｷｰﾁｬﾝﾈﾙ": TodayandTomorrow_ch()
+            case "デジカメプリントチャンネル": PhotoPrints_ch()
+            default:
+                Text("\(channelName) チャンネル起動")
+            }
+
+        }
+}
+
+// プレースホルダー用View
+struct GenericChannelView: View {
+    let name: String
+    var body: some View {
+        VStack {
+            Text("\(name)")
+                .font(.largeTitle)
+            Text("チャンネルを起動しています...")
+                .foregroundColor(.secondary)
         }
     }
 }
 
-// MARK: - チャンネルアイコン
+// アイコン描画用
 struct ChannelIcon: View {
     let name: String
     let imageName: String
@@ -177,66 +159,51 @@ struct ChannelIcon: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .fill(color)
-                .frame(width: 185, height: 95)
+                .frame(height: 95)
                 .shadow(radius: 5)
             
-            if name != "　" {
+            if !name.isEmpty {
                 VStack {
-                    Image(systemName: imageName)
-                        .font(.system(size: 40))
-                        .foregroundColor(.white)
+                    if !imageName.isEmpty {
+                        Image(systemName: imageName)
+                            .font(.system(size: 40))
+                            .foregroundColor(.white)
+                    }
                     Text(name)
-                        .font(.caption)
+                        .font(.system(size: 12))
+                        .lineLimit(1)
                         .foregroundColor(.white)
+                        .padding(.top, 4)
                 }
             }
         }
     }
 }
 
-<<<<<<< HEAD
-// プレビュープロバイダー
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        // @Bindingのプレビューには.constant()を使用
-        ContentView(downloadedChannels: .constant([]))
-=======
-// MARK: - 灰色７セグメント風時計 + 日付（黒っぽく）
+// MARK: - 時計表示コンポーネント
 struct SevenSegmentClockView: View {
     var currentTime: Date
     
     private let timeFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "HH:mm"
-        return f
+        let f = DateFormatter(); f.dateFormat = "HH:mm"; return f
     }()
     
     private let dateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.locale = Locale(identifier: "ja_JP")
-        f.dateFormat = "yyyy/MM/dd (E)"
+        f.dateFormat = "MM/dd(EEE)"
         return f
     }()
     
     var body: some View {
-        VStack(spacing: 4) {
-            Text(dateFormatter.string(from: currentTime))
-                .font(.system(size: 13, weight: .medium, design: .monospaced))
-                .foregroundColor(Color.black.opacity(0.65))
+        VStack(spacing: 2) {
             Text(timeFormatter.string(from: currentTime))
                 .font(.system(size: 48, weight: .black, design: .monospaced))
                 .foregroundColor(Color.black.opacity(0.85))
-                .shadow(color: .white.opacity(0.2), radius: 1, x: 0, y: 1)
+            
+            Text(dateFormatter.string(from: currentTime))
+                .font(.system(size: 16, weight: .medium, design: .monospaced))
+                .foregroundColor(Color.black.opacity(0.5))
         }
-    }
-}
-
-
-// MARK: - プレビュー
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView(downloadedChannels: .constant([]))
-            .preferredColorScheme(.light)
->>>>>>> develop
     }
 }

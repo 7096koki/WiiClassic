@@ -140,47 +140,62 @@ struct News_ch: View {
     }
 }
 
-// URL入力画面
 struct URLInputView: View {
     @State private var urlString: String = ""
     @Binding var newsItems: [RSSItem]
-    
+
     var body: some View {
         VStack(spacing: 20) {
             Text("RSS URLを入力")
                 .font(.headline)
                 .padding(.top)
-            
+
             TextField("https://example.com/feed.xml", text: $urlString)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .keyboardType(.URL)
                 .autocapitalization(.none)
-            
+
             Button("取得") {
-                // XMLParserでURLを取得する
-                guard let url = URL(string: urlString) else { return }
-                
-                let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                    guard let data = data, error == nil else {
-                        return
-                    }
-                    
-                    let parser = XMLParser(data: data)
-                    let delegate = RSSParserDelegate()
-                    parser.delegate = delegate
-                    
-                    if parser.parse() {
-                        DispatchQueue.main.async {
-                            self.newsItems = delegate.parsedItems
-                        }
+                fetchRSSFeed(urlString)
+            }
+
+            List(newsItems, id: \.link) { item in
+                NavigationLink(destination: WebBrowserView(url: item.link)) {
+                    VStack(alignment: .leading) {
+                        Text(item.title)
+                            .font(.headline)
+                        Text(item.pubDate)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
                     }
                 }
-                task.resume()
             }
-            
+            .listStyle(PlainListStyle())
+
             Spacer()
         }
         .padding()
         .navigationTitle("URL入力")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func fetchRSSFeed(_ urlString: String) {
+        newsItems = [] // 前回の結果をクリア
+        guard let url = URL(string: urlString) else { return }
+
+        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else { return }
+
+            let parser = XMLParser(data: data)
+            let delegate = RSSParserDelegate()
+            parser.delegate = delegate
+
+            if parser.parse() {
+                DispatchQueue.main.async {
+                    self.newsItems = delegate.parsedItems
+                }
+            }
+        }
+        task.resume()
     }
 }
