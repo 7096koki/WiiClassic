@@ -185,7 +185,7 @@ struct DataManagementView: View {
 
                 Section(header: Text("ダウンロード済みチャンネル")) {
                     if downloadedChannels.isEmpty {
-                        Text("追加チャンネルはありません")
+                        Text("パーソナルチャンネルはありません")
                             .foregroundColor(.gray)
                     } else {
                         ForEach(downloadedChannels) { channel in
@@ -207,7 +207,7 @@ struct DataManagementView: View {
             }
             .listStyle(InsetGroupedListStyle())
             
-            Text("Visual Update: Minimum width enforced for small data")
+            Text("本アプリは、驚異の10ブロック未満で構成されています。w")
                 .font(.caption2)
                 .foregroundColor(.gray)
                 .padding(.bottom, 10)
@@ -252,6 +252,10 @@ struct CreditsView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("開発チーム").font(.headline)
                     Text("Wii愛好家(仮)").foregroundColor(.secondary)
+                    Divider().padding(.vertical)
+                    Text("製作者").font(.headline)
+                    Text("7096koki(GitHub名)").foregroundColor(.secondary)
+                    Text("Gemini 3 Flash(Wii愛好家の会員として)").foregroundColor(.secondary)
                     Divider().padding(.vertical)
                 }
                 .padding()

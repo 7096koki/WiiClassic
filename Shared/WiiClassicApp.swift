@@ -16,6 +16,13 @@ struct WiiClassicApp: App {
                         Text("Wiiメニュー")
                     }
                 
+                // MARK: SDカードメニュー
+                SDCardMenuView()
+                    .tabItem {
+                        Image(systemName: "sdcard")
+                        Text("SDカードメニュー")
+                    }
+                
                 // MARK: Wii伝言板
                 WiiMessageBoardView()
                     .tabItem {

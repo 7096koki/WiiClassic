@@ -121,9 +121,16 @@ struct WiiShop_ch: View {
         PersonalChannel(
             name: "マイペンケースクリエイター",
             imageName: "pencil",
-            color: "green",
+            color: "orange",
             description: "WiiClassic開発者である7096kokiがトンボ鉛筆の文房具が好きなので作ってみました。",
             blocks: 1 // 引数名を blocks に修正
+        ),
+        PersonalChannel(
+            name: "地球儀チャンネル",
+            imageName: "globe",
+            color: "green",
+            description: "いつかお天気チャンネルの地球儀に実装します。それまではこれをお楽しみください！",
+            blocks: 44 // 引数名を blocks に修正
         ),
     ]
     

@@ -129,6 +129,7 @@ struct ContentView: View {
             case "マイペンケースクリエイター": MyPencaseCreator()
             case "きょうとあしたの占いﾗｯｷｰﾁｬﾝﾈﾙ": TodayandTomorrow_ch()
             case "デジカメプリントチャンネル": PhotoPrints_ch()
+            case "地球儀チャンネル": Globe_wiiware()
             default:
                 Text("\(channelName) チャンネル起動")
             }
@@ -143,7 +144,7 @@ struct GenericChannelView: View {
         VStack {
             Text("\(name)")
                 .font(.largeTitle)
-            Text("チャンネルを起動しています...")
+            Text("チャンネルのcase文が用意されていないバグだね。直すからちょい待ち。")
                 .foregroundColor(.secondary)
         }
     }
