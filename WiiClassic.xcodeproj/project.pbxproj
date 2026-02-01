@@ -29,8 +29,8 @@
 		E717D7862EB99B3A004CB029 /* TVnotomo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76E2EB99B3A004CB029 /* TVnotomo_ch.swift */; };
 		E717D7872EB99B3A004CB029 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76F2EB99B3A004CB029 /* Persistence.swift */; };
 		E717D7882EB99B3A004CB029 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76F2EB99B3A004CB029 /* Persistence.swift */; };
-		E717D7892EB99B3A004CB029 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7702EB99B3A004CB029 /* ContentView.swift */; };
-		E717D78A2EB99B3A004CB029 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7702EB99B3A004CB029 /* ContentView.swift */; };
+		E717D7892EB99B3A004CB029 /* WiiMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7702EB99B3A004CB029 /* WiiMenu.swift */; };
+		E717D78A2EB99B3A004CB029 /* WiiMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7702EB99B3A004CB029 /* WiiMenu.swift */; };
 		E717D78B2EB99B3A004CB029 /* WiiShop_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */; };
 		E717D78C2EB99B3A004CB029 /* WiiShop_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */; };
 		E717D78D2EB99B3A004CB029 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7722EB99B3A004CB029 /* SettingsView.swift */; };
@@ -39,12 +39,16 @@
 		E73069182EE58C2200A2749A /* Today&Tomorrow_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73069162EE58C2200A2749A /* Today&Tomorrow_ch.swift */; };
 		E77235612ED5888500330CB4 /* MyPencaseCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77235602ED5888500330CB4 /* MyPencaseCreator.swift */; };
 		E77235622ED5888500330CB4 /* MyPencaseCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77235602ED5888500330CB4 /* MyPencaseCreator.swift */; };
+		E78202582F14AE6F00723F6F /* SDcardmenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78202572F14AE6F00723F6F /* SDcardmenu.swift */; };
+		E78202592F14AE6F00723F6F /* SDcardmenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78202572F14AE6F00723F6F /* SDcardmenu.swift */; };
 		E78AE1F72EC5960800840CA6 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78AE1F62EC5960800840CA6 /* Chess.swift */; };
 		E78AE1F82EC5960800840CA6 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78AE1F62EC5960800840CA6 /* Chess.swift */; };
 		E78CCCD22ED1241B00F963CD /* Photo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78CCCD12ED1241B00F963CD /* Photo_ch.swift */; };
 		E78CCCD32ED1241B00F963CD /* Photo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78CCCD12ED1241B00F963CD /* Photo_ch.swift */; };
 		E78F7B732EF52F220050799B /* PhotoPrints_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78F7B722EF52F220050799B /* PhotoPrints_ch.swift */; };
 		E78F7B742EF52F220050799B /* PhotoPrints_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78F7B722EF52F220050799B /* PhotoPrints_ch.swift */; };
+		E7B350202F1D7F1300C03A24 /* Globe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B3501F2F1D7F1300C03A24 /* Globe.swift */; };
+		E7B350212F1D7F1300C03A24 /* Globe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B3501F2F1D7F1300C03A24 /* Globe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,7 +63,7 @@
 		E717D76D2EB99B3A004CB029 /* Forecast_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Forecast_ch.swift; sourceTree = "<group>"; };
 		E717D76E2EB99B3A004CB029 /* TVnotomo_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVnotomo_ch.swift; sourceTree = "<group>"; };
 		E717D76F2EB99B3A004CB029 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		E717D7702EB99B3A004CB029 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E717D7702EB99B3A004CB029 /* WiiMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiiMenu.swift; sourceTree = "<group>"; };
 		E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiiShop_ch.swift; sourceTree = "<group>"; };
 		E717D7722EB99B3A004CB029 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E73069162EE58C2200A2749A /* Today&Tomorrow_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Today&Tomorrow_ch.swift"; sourceTree = "<group>"; };
@@ -69,9 +73,11 @@
 		E73556382E544F91001AAB46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E73556392E544F91001AAB46 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		E77235602ED5888500330CB4 /* MyPencaseCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPencaseCreator.swift; sourceTree = "<group>"; };
+		E78202572F14AE6F00723F6F /* SDcardmenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDcardmenu.swift; sourceTree = "<group>"; };
 		E78AE1F62EC5960800840CA6 /* Chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chess.swift; sourceTree = "<group>"; };
 		E78CCCD12ED1241B00F963CD /* Photo_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo_ch.swift; sourceTree = "<group>"; };
 		E78F7B722EF52F220050799B /* PhotoPrints_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPrints_ch.swift; sourceTree = "<group>"; };
+		E7B3501F2F1D7F1300C03A24 /* Globe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Globe.swift; path = Shared/Globe.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +113,8 @@
 			children = (
 				E717D7632EB99B39004CB029 /* Assets.xcassets */,
 				E717D76A2EB99B39004CB029 /* WiiClassicApp.swift */,
-				E717D7702EB99B3A004CB029 /* ContentView.swift */,
+				E717D7702EB99B3A004CB029 /* WiiMenu.swift */,
+				E78202572F14AE6F00723F6F /* SDcardmenu.swift */,
 				E717D76B2EB99B39004CB029 /* WiiMessageBoardView.swift */,
 				E717D7722EB99B3A004CB029 /* SettingsView.swift */,
 				E717D76C2EB99B3A004CB029 /* Model.swift */,
@@ -156,6 +163,7 @@
 		E78AE1FA2ED0744400840CA6 /* PersonalChannel */ = {
 			isa = PBXGroup;
 			children = (
+				E7B3501F2F1D7F1300C03A24 /* Globe.swift */,
 				E78AE1F62EC5960800840CA6 /* Chess.swift */,
 				E77235602ED5888500330CB4 /* MyPencaseCreator.swift */,
 			);
@@ -263,9 +271,11 @@
 			files = (
 				E73069172EE58C2200A2749A /* Today&Tomorrow_ch.swift in Sources */,
 				E717D7812EB99B3A004CB029 /* Model.swift in Sources */,
-				E717D7892EB99B3A004CB029 /* ContentView.swift in Sources */,
+				E717D7892EB99B3A004CB029 /* WiiMenu.swift in Sources */,
 				E717D7772EB99B3A004CB029 /* SaveData.xcdatamodeld in Sources */,
+				E7B350202F1D7F1300C03A24 /* Globe.swift in Sources */,
 				E717D7852EB99B3A004CB029 /* TVnotomo_ch.swift in Sources */,
+				E78202582F14AE6F00723F6F /* SDcardmenu.swift in Sources */,
 				E717D78B2EB99B3A004CB029 /* WiiShop_ch.swift in Sources */,
 				E717D7792EB99B3A004CB029 /* News_ch.swift in Sources */,
 				E77235612ED5888500330CB4 /* MyPencaseCreator.swift in Sources */,
@@ -288,9 +298,11 @@
 			files = (
 				E73069182EE58C2200A2749A /* Today&Tomorrow_ch.swift in Sources */,
 				E717D7822EB99B3A004CB029 /* Model.swift in Sources */,
-				E717D78A2EB99B3A004CB029 /* ContentView.swift in Sources */,
+				E717D78A2EB99B3A004CB029 /* WiiMenu.swift in Sources */,
 				E717D7782EB99B3A004CB029 /* SaveData.xcdatamodeld in Sources */,
+				E7B350212F1D7F1300C03A24 /* Globe.swift in Sources */,
 				E717D7862EB99B3A004CB029 /* TVnotomo_ch.swift in Sources */,
+				E78202592F14AE6F00723F6F /* SDcardmenu.swift in Sources */,
 				E717D78C2EB99B3A004CB029 /* WiiShop_ch.swift in Sources */,
 				E717D77A2EB99B3A004CB029 /* News_ch.swift in Sources */,
 				E77235622ED5888500330CB4 /* MyPencaseCreator.swift in Sources */,
