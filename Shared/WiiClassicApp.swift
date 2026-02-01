@@ -10,7 +10,7 @@ struct WiiClassicApp: App {
         WindowGroup {
             TabView {
                 // MARK: Wiiメニュー
-                WiiMenu(downloadedChannels: $downloadedChannels)
+                WiiMenuView(downloadedChannels: $downloadedChannels)
                     .tabItem {
                         Image(systemName: "square.grid.2x2.fill")
                         Text("Wiiメニュー")

@@ -1,7 +1,7 @@
 import SwiftUI
 
 // MARK: - メインメニュー View
-struct WiiMenu: View {
+struct WiiMenuView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Binding var downloadedChannels: [PersonalChannel]
     
