@@ -29,8 +29,8 @@
 		E717D7862EB99B3A004CB029 /* TVnotomo_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76E2EB99B3A004CB029 /* TVnotomo_ch.swift */; };
 		E717D7872EB99B3A004CB029 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76F2EB99B3A004CB029 /* Persistence.swift */; };
 		E717D7882EB99B3A004CB029 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D76F2EB99B3A004CB029 /* Persistence.swift */; };
-		E717D7892EB99B3A004CB029 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7702EB99B3A004CB029 /* ContentView.swift */; };
-		E717D78A2EB99B3A004CB029 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7702EB99B3A004CB029 /* ContentView.swift */; };
+		E717D7892EB99B3A004CB029 /* WiiMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7702EB99B3A004CB029 /* WiiMenu.swift */; };
+		E717D78A2EB99B3A004CB029 /* WiiMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7702EB99B3A004CB029 /* WiiMenu.swift */; };
 		E717D78B2EB99B3A004CB029 /* WiiShop_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */; };
 		E717D78C2EB99B3A004CB029 /* WiiShop_ch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */; };
 		E717D78D2EB99B3A004CB029 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717D7722EB99B3A004CB029 /* SettingsView.swift */; };
@@ -63,7 +63,7 @@
 		E717D76D2EB99B3A004CB029 /* Forecast_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Forecast_ch.swift; sourceTree = "<group>"; };
 		E717D76E2EB99B3A004CB029 /* TVnotomo_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVnotomo_ch.swift; sourceTree = "<group>"; };
 		E717D76F2EB99B3A004CB029 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		E717D7702EB99B3A004CB029 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E717D7702EB99B3A004CB029 /* WiiMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiiMenu.swift; sourceTree = "<group>"; };
 		E717D7712EB99B3A004CB029 /* WiiShop_ch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiiShop_ch.swift; sourceTree = "<group>"; };
 		E717D7722EB99B3A004CB029 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E73069162EE58C2200A2749A /* Today&Tomorrow_ch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Today&Tomorrow_ch.swift"; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 			children = (
 				E717D7632EB99B39004CB029 /* Assets.xcassets */,
 				E717D76A2EB99B39004CB029 /* WiiClassicApp.swift */,
-				E717D7702EB99B3A004CB029 /* ContentView.swift */,
+				E717D7702EB99B3A004CB029 /* WiiMenu.swift */,
 				E78202572F14AE6F00723F6F /* SDcardmenu.swift */,
 				E717D76B2EB99B39004CB029 /* WiiMessageBoardView.swift */,
 				E717D7722EB99B3A004CB029 /* SettingsView.swift */,
@@ -271,7 +271,7 @@
 			files = (
 				E73069172EE58C2200A2749A /* Today&Tomorrow_ch.swift in Sources */,
 				E717D7812EB99B3A004CB029 /* Model.swift in Sources */,
-				E717D7892EB99B3A004CB029 /* ContentView.swift in Sources */,
+				E717D7892EB99B3A004CB029 /* WiiMenu.swift in Sources */,
 				E717D7772EB99B3A004CB029 /* SaveData.xcdatamodeld in Sources */,
 				E7B350202F1D7F1300C03A24 /* Globe.swift in Sources */,
 				E717D7852EB99B3A004CB029 /* TVnotomo_ch.swift in Sources */,
@@ -298,7 +298,7 @@
 			files = (
 				E73069182EE58C2200A2749A /* Today&Tomorrow_ch.swift in Sources */,
 				E717D7822EB99B3A004CB029 /* Model.swift in Sources */,
-				E717D78A2EB99B3A004CB029 /* ContentView.swift in Sources */,
+				E717D78A2EB99B3A004CB029 /* WiiMenu.swift in Sources */,
 				E717D7782EB99B3A004CB029 /* SaveData.xcdatamodeld in Sources */,
 				E7B350212F1D7F1300C03A24 /* Globe.swift in Sources */,
 				E717D7862EB99B3A004CB029 /* TVnotomo_ch.swift in Sources */,

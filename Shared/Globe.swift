@@ -1,107 +1,110 @@
 import SwiftUI
 import SceneKit
 
-/// アセット内の画像を使用して表示するリアルな地球儀ビュー
 struct Globe_wiiware: View {
     var body: some View {
-        ZStack {
-            // 背景色（宇宙の暗闇）
-            Color.black.ignoresSafeArea()
-            
-            // 3Dシーンを表示するメインコンポーネント
-            SceneView(
-                scene: createEarthScene(),
-                options: [
-                    .allowsCameraControl,    // ユーザーが指で操作可能にする
-                    .autoenablesDefaultLighting // 自動的に適切な照明を配置する
-                ]
-            )
-            .ignoresSafeArea()
-            
-            // デザイン用のオーバーレイ
-            VStack {
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Earth Live View")
-                            .font(.system(.title3, design: .monospaced))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        Text("3D Satellite Data Mode")
-                            .font(.system(.caption, design: .monospaced))
-                            .foregroundColor(.blue)
-                    }
-                    .padding()
-                    .background(Color.black.opacity(0.5))
-                    .cornerRadius(12)
-                    .padding(.leading, 20)
-                    .padding(.top, 20)
-                    
-                    Spacer()
-                }
-                Spacer()
-                
-                // 操作ガイド
-                Text("Swipe to Rotate / Pinch to Zoom")
-                    .font(.system(.caption2, design: .monospaced))
-                    .foregroundColor(.white.opacity(0.6))
-                    .padding(.bottom, 30)
-            }
-        }
+        SceneView(
+            scene: createGlobeScene(),
+            pointOfView: nil,
+            options: [
+                .allowsCameraControl, // ユーザーが指で回転可能
+                .autoenablesDefaultLighting // 基本的な照明を有効化
+            ]
+        )
+        .ignoresSafeArea()
+        .background(Color.black)
     }
     
-    /// 地球の3Dシーンを構築する関数
-    private func createEarthScene() -> SCNScene {
+    func createGlobeScene() -> SCNScene {
         let scene = SCNScene()
         
-        // 1. 地球の形状（球体）を作成
-        // 半径5.0、セグメント数を多め（96）にして滑らかにする
-        let globeGeometry = SCNSphere(radius: 5.0)
-        globeGeometry.segmentCount = 96
+        // --- 1. GLOBE SETUP (地球の設定) ---
+        let globe = SCNSphere(radius: 1.0)
+        globe.segmentCount = 72 // 滑らかさの向上
         
-        let globeNode = SCNNode(geometry: globeGeometry)
-        
-        // 2. マテリアル（質感と画像）の設定
         let material = SCNMaterial()
-        
-        // --- 【重要】アセットに入れた画像を指定 ---
-        // 画像の名前が "earth_map" でない場合は、下の文字列を書き換えてください
-        if let earthImage = UIImage(named: "globe") {
-            material.diffuse.contents = earthImage
+        // 指定されたテクスチャ画像（globe_image）を適用
+        if let globeTexture = UIImage(named: "globe_image") {
+            material.diffuse.contents = globeTexture
         } else {
-            // 画像が見つからない場合のフォールバック（青い球体）
+            // 画像が見つからない場合のフォールバック（デバッグ用）
             material.diffuse.contents = UIColor.systemBlue
         }
         
-        // 鏡面反射の設定（海などが光を反射するようにする）
-        material.specular.contents = UIColor(white: 0.5, alpha: 1.0)
-        material.shininess = 15.0
+        material.specular.contents = UIColor(white: 0.2, alpha: 1.0)
+        material.shininess = 0.1
+        globe.materials = [material]
         
-        globeGeometry.materials = [material]
-        
-        // 3. 地軸の傾きを設定（約23.4度）
-        // SceneKitはラジアンを使うので変換して適用
-        globeNode.eulerAngles.x = Float(-23.4 * .pi / 180)
-        
-        // シーンに地球を追加
+        let globeNode = SCNNode(geometry: globe)
+        globeNode.position = SCNVector3(0, 0, 0) // 中心に配置
         scene.rootNode.addChildNode(globeNode)
         
-        // 5. 環境光の調整（少しだけ暗い部分も見えるように）
-        let ambientLightNode = SCNNode()
-        ambientLightNode.light = SCNLight()
-        ambientLightNode.light?.type = .ambient
-        ambientLightNode.light?.color = UIColor(white: 0.2, alpha: 1.0)
-        scene.rootNode.addChildNode(ambientLightNode)
+        // --- 2. FIXED STARS (増えない固定の星々) ---
+        let starCount = 400
+        let starRadius: Float = 40.0
+        let starImage = createStarDotImage()
         
-        // 背景を宇宙（黒）に設定
+        for _ in 0..<starCount {
+            let phi = Float.random(in: 0...(2 * .pi))
+            let theta = acos(Float.random(in: -1...1))
+            
+            let x = starRadius * sin(theta) * cos(phi)
+            let y = starRadius * sin(theta) * sin(phi)
+            let z = starRadius * cos(theta)
+            
+            let starPlane = SCNPlane(width: 0.2, height: 0.2)
+            starPlane.materials.first?.diffuse.contents = starImage
+            starPlane.materials.first?.lightingModel = .constant
+            
+            let starNode = SCNNode(geometry: starPlane)
+            starNode.position = SCNVector3(x, y, z)
+            
+            // ビルボード制約（常にカメラを向く）
+            let billboard = SCNBillboardConstraint()
+            billboard.freeAxes = .all
+            starNode.constraints = [billboard]
+            
+            scene.rootNode.addChildNode(starNode)
+        }
+        
+        // --- 3. CAMERA SETUP (地球中心の軸) ---
+        let camera = SCNCamera()
+        camera.zFar = 100
+        camera.zNear = 0.1
+        
+        let cameraNode = SCNNode()
+        cameraNode.camera = camera
+        // カメラの初期位置
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 4.0)
+        
+        // カメラが常に地球の中心（0,0,0）を向くように制約を追加
+        let lookAtConstraint = SCNLookAtConstraint(target: globeNode)
+        lookAtConstraint.isGimbalLockEnabled = true
+        cameraNode.constraints = [lookAtConstraint]
+        
+        scene.rootNode.addChildNode(cameraNode)
+        
+        // --- 4. ENVIRONMENT LIGHTING (環境光) ---
+        let ambientLight = SCNLight()
+        ambientLight.type = .ambient
+        ambientLight.intensity = 150
+        let ambientNode = SCNNode()
+        ambientNode.light = ambientLight
+        scene.rootNode.addChildNode(ambientNode)
+        
         scene.background.contents = UIColor.black
         
         return scene
     }
-}
-
-// Xcodeのプレビュー用
-struct GlobeView_Previews: PreviewProvider {
-    static var previews: some View {
-        Globe_wiiware()
+    
+    // 星の点テクスチャ生成
+    func createStarDotImage() -> UIImage {
+        let size: CGFloat = 16
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: size, height: size))
+        return renderer.image { context in
+            let rect = CGRect(origin: .zero, size: CGSize(width: size, height: size))
+            context.cgContext.setFillColor(UIColor.white.cgColor)
+            context.cgContext.fillEllipse(in: rect)
+        }
     }
 }
