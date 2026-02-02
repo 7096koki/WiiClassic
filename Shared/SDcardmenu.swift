@@ -98,7 +98,7 @@ struct SDCardMenuView: View {
                         
                         // 1/20 などの表記を時計と同じフォント感で表示
                         VStack(spacing: 4) {
-                            Text("\(currentPage + 1) / \(totalPages)")
+                            Text("0\(currentPage + 1) / \(totalPages)")
                                 .font(.system(size: 48, weight: .black, design: .monospaced))
                                 .foregroundColor(.white)
                                 .shadow(color: .black.opacity(0.5), radius: 2, x: 2, y: 2)

@@ -206,11 +206,6 @@ struct DataManagementView: View {
                 }
             }
             .listStyle(InsetGroupedListStyle())
-            
-            Text("本アプリは、驚異の10ブロック未満で構成されています。w")
-                .font(.caption2)
-                .foregroundColor(.gray)
-                .padding(.bottom, 10)
         }
         .background(Color(white: 0.96))
         .navigationTitle("データ管理")
@@ -276,7 +271,7 @@ struct AboutAppView: View {
                 .font(.system(size: 80))
                 .foregroundColor(.blue).padding()
             VStack(alignment: .leading, spacing: 15) {
-                Text("WiiClassic v1.4.0-alpha").font(.title2.bold())
+                Text("WiiClassic v1.5.0-alpha").font(.title2.bold())
                 Text("このアプリは、Wiiのユーザー体験を再現するファンプロジェクトです。")
                 Text("※本アプリは任天堂株式会社とは一切関係ありません。")
                     .font(.caption).foregroundColor(.red)
